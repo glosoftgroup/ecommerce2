@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo</title>
+</head>
+<body class="option6"> 
+<!-- <ul>
+ <h3>List of items from odoo</h3>
+ {% for record in records %}
+  <li>( {{record.id}} ) {{ record.name }} - {{record.country_id.0}} years old from {{record.country_id.1}}</li>
+  {% endfor%}	
+</ul> -->
+
+<ul>
+ <h3>List of Products from odoo</h3>
+ {% for record in records %}
+  <li> {{ record.name }} - {{record.list_price}} - 
+  <img src="data:image/jpg;base64,{{ record.image }}" />
+  </li>
+  {% endfor%}	
+</ul>
+ 
+</body>
+</html>
