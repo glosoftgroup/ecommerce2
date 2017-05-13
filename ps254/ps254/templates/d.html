@@ -84,60 +84,20 @@
 <body class="option6"> 
 
 <div class="container">
-  <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        {% for category in categories %}
-		  <li><a href="javascript:;" onclick="showCat({{ category.id}})">id: {{ category.id}} - {{category.name}}</a></li>
-		  {% csrf_token %}
-	    {% endfor%}
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</div>
-
-<!-- <ul>
- <h3>List of Products from odoo</h3>
- {% for record in records %}
-  <li>id: {{ record.id}} & {{ record.name }} - {{record.list_price}} - 
-  <img src="data:image/jpg;base64,{{ record.image }}" />
-  </li>
-  {% endfor%}	
-</ul> -->
-<div class="container">
-<h3>List of Products from odoo</h3>
+<h3>Product Details</h3>
     <hr>
-  <div id="data">
-    {% for product in products %}
+    {% for product in product_detail %}
         <div class="row row-margin-bottom">
             <!-- <div class="col-md-1"></div> -->
             <div class="col-md-5 no-padding lib-item" data-category="view">
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-md-6">
-                          <a href="{{ product.id}}">
                             <img class="lib-img-show" src="data:image/jpg;base64,{{ product.image }}"/>
-                          </a>
                         </div>
                         <div class="col-md-6">
                             <div class="lib-row lib-header">
-                              <a href="{{ product.id}}">
                                 {{ product.name }} @ {{product.list_price}}
-                              </a>
                                 <div class="lib-header-seperator"></div>
                             </div>
                             <div class="lib-row lib-desc">
@@ -149,31 +109,9 @@
             </div>       
         </div>
     {% endfor%}
-  </div>
 </div>
 
 <script type="text/javascript" src="{% static 'assets/lib/jquery/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/lib/bootstrap/js/bootstrap.min.js' %}"></script>
-<script type="text/javascript">
-	function showCat(id){
-     // alert(id);
-     // e.preventDefault();
-     $.ajax({
-     	type:'POST',
-     	url:'/category_id/',
-     	data:{
-     		cat_id: id,
-     		csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-     	},
-     	success:function(data){
-     		if(data != ''){
-     		  alert('success' );	
-     		}else{
-     		  alert('no data');
-     		}
-     	}
-     });
-	}
-</script>
 </body>
 </html>

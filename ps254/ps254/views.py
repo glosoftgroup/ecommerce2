@@ -1,11 +1,11 @@
 from django.shortcuts import render
-import base64
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
-from services import get_records
+from services import get_products, get_categories, get_product_details, get_category_details
 
 def home(request):
-	records = get_records()
-	return render(request, "index.html", {'records':records})
+	products = get_products()
+	return render(request, "index.html", {'products':products})
 
 def about(request):
 	return render(request, "about.html", {})
@@ -16,9 +16,22 @@ def contact(request):
 def category(request):
 	return render(request, "category.html", {})
 
-def records(request):
-    records = get_records()
-    return render(request,"demo.html",{'records':records})
+def category_byId(request):
+	if request.method == 'POST':
+		cat_id = request.POST['cat_id']
+		category = get_category_details(cat_id)
+		# return JsonResponse(category)
+		return JsonResponse(dict(genres=list(category)))
+
+def products(request):
+    products = get_products()
+    category = get_categories()
+    return render(request,"demo.html",{'products':products, 'categories':category})
+
+def product_detail(request, product_id):
+	detail = get_product_details(product_id)
+	return render(request, "d.html", {'product_detail':detail})
+
 
 # class ProductsPage(TemplateView):
 #     def get_records(self,request):

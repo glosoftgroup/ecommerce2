@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^category/$', views.category, name='category'),
-    url(r'^record/$', views.records, name='records'),
+    url(r'^category_id/$', views.category_byId, name='category_byId'),
+    url(r'^products/$', views.products, name='products'),
+    url(r'^products/(?P<product_id>[0-9]+)/$', views.product_detail, name='product_detail'),
 ]
