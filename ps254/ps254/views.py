@@ -4,11 +4,24 @@ from django.template import Context, Template, RequestContext
 from django.http import HttpResponse, JsonResponse
 import json
 from django.views.generic import TemplateView
-from services import get_products, get_categories, get_product_details, get_category_details
+from services import get_products, get_categories, get_product_details, get_category_details, get_root_categories, get_parent_categoriesBy, get_child_categoriesBy
 
 def home(request):
 	products = get_products()
-	return render(request, "index.html", {'products':products})
+	root_categories = get_root_categories()
+	for r in root_categories:
+		root_id = int(r['id'])
+		parent_categories = get_parent_categoriesBy(root_id)
+		for p in parent_categories:
+			parent_id = int(p['id'])
+			child_categories = get_child_categoriesBy(parent_id)
+
+
+	return render(request, "index.html", 
+		{'products':products, 
+		'root_categories': root_categories, 
+		'parent_categories':parent_categories, 
+		'child_categories':child_categories })
 
 def about(request):
 	return render(request, "about.html", {})

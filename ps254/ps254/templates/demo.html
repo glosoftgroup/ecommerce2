@@ -164,17 +164,12 @@
 	function showCat(id){
 		$('#data').html('&nbsp;').load('/category_id/', 'cat_id='+id); 
 	}
-	// $('#spinner').ajaxStart( function() {
-	// 	$(this).show();  // show Loading Div
-	// 	} ).ajaxStop ( function(){
-	// 	$(this).hide(); // hide loading div
-	// });
 
-		$(document).ajaxStart(function() {		
-			$('#spinner').show();
-			}).ajaxStop(function() {
-			$('#spinner').hide();
-		});
+	$(document).ajaxStart(function() {		
+		$('#spinner').show();
+		}).ajaxStop(function() {
+		$('#spinner').hide();
+	});
 </script>
 </body>
 </html>
