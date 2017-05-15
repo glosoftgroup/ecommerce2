@@ -121,6 +121,9 @@
 <div class="container">
 <h3>List of Products from odoo</h3>
     <hr>
+    <div id="spinner" style="display: none;text-align: center;"> 
+      <img src="{% static 'assets/images/spinner.gif' %}" style="width:32px;height:32px;"/>
+    </div>
   <div id="data">
     {% for product in products %}
         <div class="row row-margin-bottom">
@@ -149,6 +152,9 @@
             </div>       
         </div>
     {% endfor%}
+    <h2>Start of P-names</h2>
+    <div id="p-names"></div>
+
   </div>
 </div>
 
@@ -156,24 +162,19 @@
 <script type="text/javascript" src="{% static 'assets/lib/bootstrap/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript">
 	function showCat(id){
-     // alert(id);
-     // e.preventDefault();
-     $.ajax({
-     	type:'POST',
-     	url:'/category_id/',
-     	data:{
-     		cat_id: id,
-     		csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-     	},
-     	success:function(data){
-     		if(data != ''){
-     		  alert('success' );	
-     		}else{
-     		  alert('no data');
-     		}
-     	}
-     });
+		$('#data').html('&nbsp;').load('/category_id/', 'cat_id='+id); 
 	}
+	// $('#spinner').ajaxStart( function() {
+	// 	$(this).show();  // show Loading Div
+	// 	} ).ajaxStop ( function(){
+	// 	$(this).hide(); // hide loading div
+	// });
+
+		$(document).ajaxStart(function() {		
+			$('#spinner').show();
+			}).ajaxStop(function() {
+			$('#spinner').hide();
+		});
 </script>
 </body>
 </html>

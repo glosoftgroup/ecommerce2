@@ -734,11 +734,12 @@
                 <!-- Product -->
                     <div id="product">
                         <div class="primary-box row">
+                        {% for product in product_detail %}
                             <div class="pb-left-column col-xs-12 col-sm-6">
                                 <!-- product-imge-->
                                 <div class="product-image">
                                     <div class="product-full">
-                                        <img id="product-zoom" src='assets/data/product-s3-420x512.jpg' data-zoom-image="{% static 'assets/data/product-s3-850x1036.jpg' %}"/>
+                                        <img id="product-zoom" src='data:image/jpg;base64,{{ product.image }}' data-zoom-image="{% static 'assets/data/product-s3-850x1036.jpg' %}"/>
                                     </div>
                                     <div class="product-img-thumb" id="gallery_01">
                                         <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
@@ -778,8 +779,8 @@
                                 <!-- product-imge-->
                             </div>
                             <div class="pb-right-column col-xs-12 col-sm-6">
-                                <h1 class="product-name">Maecenas consequat mauris</h1>
-                                <div class="product-comments">
+                                <h1 class="product-name">{{ product.name }}</h1>
+                                <!-- <div class="product-comments">
                                     <div class="product-star">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -791,19 +792,23 @@
                                         <a href="#">Based  on 3 ratings</a>
                                         <a href="#"><i class="fa fa-pencil"></i> write a review</a>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="product-price-group">
-                                    <span class="price">$38.95</span>
+                                    <span class="price">{{product.list_price}}</span>
                                     <span class="old-price">$52.00</span>
                                     <span class="discount">-30%</span>
                                 </div>
-                                <div class="info-orther">
+                                <!-- <div class="info-orther">
                                     <p>Item Code: #453217907</p>
                                     <p>Availability: <span class="in-stock">In stock</span></p>
                                     <p>Condition: New</p>
-                                </div>
+                                </div> -->
                                 <div class="product-desc">
-                                    Vestibulum eu odio. Suspendisse potenti. Morbi mollis tellus ac sapien. Praesent egestas tristique nibh. Nullam dictum felis eu pede mollis pretium.Fusce egestas elit eget lorem. 
+                                   {% if product.description %}
+                                     {{ product.description }}
+                                   {% else %}
+                                      No product Description
+                                   {% endif %}
                                 </div>
                                 <div class="form-option">
                                     <p class="form-option-title">Available Options:</p>
@@ -870,6 +875,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endfor%}
                         </div>
                         <!-- tab product -->
                         <div class="product-tab">

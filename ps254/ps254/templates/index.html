@@ -675,15 +675,18 @@
                                    </div>
                                    <div class="box-right">
                                        <ul class="product-list row">
+                                       
+                                       {% for product in products %}
+                                       {% if product.image %}
                                                 <li class="col-sm-4">
                                                     <div class="right-block">
-                                                        <h5 class="product-name"><a href="#">Sexy Red Dress</a></h5>
+                                                        <h5 class="product-name"><a href="#">{{ product.name }}</a></h5>
                                                         <div class="content_price">
-                                                            <span class="price product-price">$138,95</span>
+                                                            <span class="price product-price">{{product.list_price}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="left-block">
-                                                        <a href="#"><img class="img-responsive" alt="product" src="{% static 'assets/data/p48.jpg' %}" /></a>
+                                                        <a href="{{ product.id }}"><img class="img-responsive" alt="product" src="data:image/jpg;base64,{{ product.image }}" style="height:237px;" /></a>
                                                         <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
@@ -694,7 +697,10 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li class="col-sm-4">
+                                                {% endif %}
+                                                {% endfor %}
+
+                                                <!-- <li class="col-sm-4">
                                                     <div class="right-block">
                                                         <h5 class="product-name"><a href="#">Mesh Dress Taupe</a></h5>
                                                         <div class="content_price">
@@ -789,7 +795,7 @@
                                                             <a title="Add to Cart" href="#">Add to Cart</a>
                                                         </div>
                                                     </div>
-                                                </li>
+                                                </li> -->
                                        </ul>
                                    </div>
                                 </div>

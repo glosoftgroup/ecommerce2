@@ -1,0 +1,32 @@
+{% if category %}
+    {% for product in category %}
+        <div class="row row-margin-bottom">
+            <!-- <div class="col-md-1"></div> -->
+            <div class="col-md-5 no-padding lib-item" data-category="view">
+                <div class="lib-panel">
+                    <div class="row box-shadow">
+                        <div class="col-md-6">
+                          <a href="{{ product.id}}">
+                            <img class="lib-img-show" src="data:image/jpg;base64,{{ product.image }}"/>
+                          </a>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="lib-row lib-header">
+                              <a href="{{ product.id}}">
+                                {{ product.name }} @ {{product.list_price}}
+                              </a>
+                                <div class="lib-header-seperator"></div>
+                            </div>
+                            <div class="lib-row lib-desc">
+                               {{ product.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+        </div>
+    {% endfor%}
+
+{% else %}
+  <div class="alert alert-info">No products for this category</div>
+{% endif %}

@@ -35,7 +35,8 @@ def get_product_details(product_id):
 	return detail
 
 def get_category_details(category_id):
+	categ_id = int(category_id)
 	category = models.execute_kw(db, uid, password,
-		'product.template','search_read',[[['categ_id','=',category_id]]],
+		'product.template','search_read',[[['categ_id','=',categ_id]]],
 		{'fields':['name','list_price','image', 'description']})
 	return category

@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^category_id/$', views.category_byId, name='category_byId'),
     url(r'^products/$', views.products, name='products'),
     url(r'^products/(?P<product_id>[0-9]+)/$', views.product_detail, name='product_detail'),
+    url(r'^(?P<product_id>[0-9]+)/$', views.product_detail, name='product_detail'),
 ]
