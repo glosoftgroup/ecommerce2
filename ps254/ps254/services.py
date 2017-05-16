@@ -1,19 +1,20 @@
 import xmlrpclib
 # common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
 #for odoo web api testing purposes
-url = 'https://demo.odoo.com/start'
-# db = 'demodatadb'
-# username = 'odoo'
-# password = 'odoo'
+# url = 'https://demo.odoo.com/start'
+url = 'http://192.168.0.18:8069'
+db = 'mydb16'
+username = 'pkinuthia10@gmail.com'
+password = 'password'
 
-info = xmlrpclib.ServerProxy(url).start()
-url, db, username, password = \
-	info['host'], info['database'], info['user'], info['password']
+# info = xmlrpclib.ServerProxy(url).start()
+# url, db, username, password = \
+# 	info['host'], info['database'], info['user'], info['password']
 
 common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
 models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
 uid = common.authenticate(db, username, password, {})
-print common.version()
+# print common.version()
 
 #get all the products
 def get_products():
@@ -45,7 +46,7 @@ def get_category_details(category_id):
 #(Root Categories) get categories according to family tree 
 def get_root_categories():
 	root_category = models.execute_kw(db, uid, password,
-		'product.category','search_read',[[['parent_id','=',[1]]]],
+		'product.category','search_read',[[['parent_id','=',[0]]]],
 		{'fields':['name','id']})
 	return root_category
 

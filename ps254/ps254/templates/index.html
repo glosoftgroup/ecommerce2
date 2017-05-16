@@ -696,8 +696,8 @@
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div>
-                                                        <div class="add-to-cart">
-                                                            <a title="Add to Cart" href="#">Add to Cart</a>
+                                                        <div class="add-to-cart" onclick="addTocart({{product.id}})">
+                                                            <a title="Add to Cart" href="javascript:;">Add to Cart</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -1297,6 +1297,22 @@
         </div> 
 </footer>
 
+<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="detail_modalLabel" aria-hidden="true"> 
+     <div class="modal-dialog"> 
+      <div class="modal-content"> 
+       <div class="modal-header" style="border-bottom:none;"> 
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button> 
+        <h4 class="modal-title" id="detail_modalLabel"> Your Item Details</h4> 
+       </div> 
+       <div class="modal-body detail_modal_body">
+       <!-- data here -->
+       </div>
+    
+    </div>
+        <!-- end banner bottom -->
+    </div>
+</div>
+
 <a href="#" class="scroll_top" title="Scroll to Top" style="display: inline;">Scroll</a>
 <!-- Script-->
 <script type="text/javascript" src="{% static 'assets/lib/jquery/jquery-1.11.2.min.js' %}"></script>
@@ -1311,6 +1327,25 @@
 <!-- ./COUNTDOWN -->
 <script type="text/javascript" src="{% static 'assets/js/jquery.actual.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/theme-script.js' %}"></script>
-
+<script type="text/javascript">
+    function addTocart(id){
+        alert(data);
+        // $.ajax({
+        //     type: "POST", // "POST"
+        //     url: "{% url 'add_to_cart' %}",
+        //     data: {
+        //         csrfmiddlewaretoken: '{{ csrf_token }}',
+        //         item_id: id
+        //     },
+        //     success: function(data) {
+        //         alert(data);
+        //     }, 
+        //     error: function(data, error) {
+        //         // console.log(response)
+        //         console.log(data);
+        //     }
+        // });
+    }
+</script>
 </body>
 </html>

@@ -327,7 +327,7 @@
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="#">Home</a></li>
+                                    <li><a href="{% url 'home' %}">Home</a></li>
                                     <li class="dropdown active">
                                         <a href="{% url 'category' %}" class="dropdown-toggle" data-toggle="dropdown"> Categories </a>
                                         <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 830px;">
@@ -739,7 +739,7 @@
                                 <!-- product-imge-->
                                 <div class="product-image">
                                     <div class="product-full">
-                                        <img id="product-zoom" src='data:image/jpg;base64,{{ product.image }}' data-zoom-image="{% static 'assets/data/product-s3-850x1036.jpg' %}"/>
+                                        <img id="product-zoom" src='data:image/jpg;base64,{{ product.image }}' data-zoom-image="data:image/jpg;base64,{{ product.image}}"/>
                                     </div>
                                     <div class="product-img-thumb" id="gallery_01">
                                         <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
