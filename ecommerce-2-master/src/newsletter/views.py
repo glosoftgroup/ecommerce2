@@ -20,8 +20,18 @@ def home(request):
 	form = SignUpForm(request.POST or None)
 
 	cart_id = request.session.get("cart_id")
-	request.session["cart_id"] = cart_id
-	cart = Cart.objects.get(id=cart_id)
+	# request.session["cart_id"] = cart_id
+	# cart = Cart.objects.get(id=cart_id)
+	if cart_id == None:
+		count = 0
+		cart = Cart()
+		cart.tax_percentage = 0.075
+		cart.save()
+		cart_id = cart.id
+	else:
+		cart = Cart.objects.get(id=cart_id)
+		count = cart.items.count()
+	request.session["cart_item_count"] = count
 	context = {
 		"title": title,
 		"form": form,

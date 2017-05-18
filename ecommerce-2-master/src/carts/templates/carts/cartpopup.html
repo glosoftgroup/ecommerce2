@@ -1,8 +1,8 @@
 <div class="cart-block-content">
-    <h5 class="cart-title">Items in my cart</h5>
+    <h5 class="cart-title"><span class="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
     <div class="cart-block-list">
         <ul>
-        {% if object.cartitem_set.all %}
+        <!-- {% if object.cartitem_set.all %} -->
             {% for i in object.cartitem_set.all %}
                <!-- <li>th {{ i.item.get_title }} - {{item.quantity }}</li> -->
                <li class="product-info remove-item-{{i.item.id}}">
@@ -19,8 +19,8 @@
                     </div>
                 </li>
             {% endfor %}
-        {% else %} <li class="product-info">empty</li>
-        {% endif %}
+        <!-- {% else %} <li class="product-info">empty</li> -->
+        <!-- {% endif %} -->
         
         </ul>
     </div>

@@ -107,12 +107,12 @@
                     </span>
                     <div class="cart-block">
                         <div class="cart-block-content">
-                            <h5 class="cart-title">{{ request.session.cart_item_count }} Items in my cart</h5>
+                        {% if object.cartitem_set.all and request.session.cart_item_count %}
+                            <h5 class="cart-title"><span class="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
                             <div class="cart-block-list">
                                 <ul>
-                                {% if object.cartitem_set.all %}
+                                <!-- {% if object.cartitem_set.all %} -->
                                     {% for i in object.cartitem_set.all %}
-                                       <!-- <li>th {{ i.item.get_title }} - {{item.quantity }}</li> -->
                                        <li class="product-info remove-item-{{i.item.id}}">
                                             <div class="p-left">
                                                 <a href="javascript:;" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
@@ -121,14 +121,14 @@
                                                 </a>
                                             </div>
                                             <div class="p-right">
-                                                <p class="p-name">{{i.item.get_title}}</p><!-- <p class="p-name">{{item.item.product.title}}</p> -->
+                                                <p class="p-name">{{i.item.get_title}}</p>
                                                 <p class="p-rice">KShs. {{ i.line_item_total }}</p>
                                                 <p>Qty: {{ i.quantity }}</p>
                                             </div>
                                         </li>
                                     {% endfor %}
-                                {% else %} <li class="product-info">empty</li>
-                                {% endif %}
+                                <!-- {% else %} <li class="product-info">empty</li> -->
+                                <!-- {% endif %} -->
                                 
                                 </ul>
                             </div>
@@ -139,6 +139,9 @@
                             <div class="cart-buttons">
                                 <a href="order.html" class="btn-check-out">Checkout</a>
                             </div>
+                        {% else %} 
+                        Cart is empty
+                        {% endif %}
                         </div>
                     </div>
                 </div>
@@ -1355,9 +1358,9 @@
 <script type="text/javascript" src="{% static 'assets/js/jquery.actual.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/theme-script.js' %}"></script>
 <script type="text/javascript">
-// $(document).ready(function(){
-//      console.log({{ request.session.cart_id }});
-// });
+$(document).ready(function(){
+     console.log({{ request.session.cart_id }});
+});
     function addTocart(id, name, imageurl, id2){
         // alert('id is - '+ id+' and the name is '+name+' ** '+ id2);
         var item_name = name;
@@ -1373,7 +1376,6 @@
             },
             success: function(data) {
                 console.log(data);
-                toastr.success(data.flash_message, 'Success', {timeOut: 5000});
                 updateCartItemCount();
                 updateMinicart();
                 $('.p-message').html(data.flash_message);
@@ -1383,9 +1385,10 @@
                 $('.p-quantity').html('Qty: '+data.item_quantity);
 
                 $('#myModal').modal();
-                // $('#myModal').on('hide.bs.modal', function () { 
-                //   updateCartItemCount();
-                // });
+
+                $('#myModal').on('hide.bs.modal', function () { 
+                    toastr.success(data.flash_message, 'Success', {timeOut: 5000});
+                });
                 // console.log(data.flash_message);
                 
 
@@ -1407,6 +1410,10 @@
             success: function(data){
                 badge.text(data.count);
                 console.log(data.count);
+                $('.my-count').text(data.count);
+                if(data.count == 0){
+                  $('.cart-block-content').html('Cart is empty');
+                }
             },
             error: function(data, error) {
                 console.log(data);
