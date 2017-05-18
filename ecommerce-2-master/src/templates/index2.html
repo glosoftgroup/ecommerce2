@@ -134,7 +134,7 @@
                             </div>
                             <div class="toal-cart">
                                 <span>SubTotal - </span>
-                                <span class="toal-price pull-right">{{ object.subtotal }}</span>
+                                <span class="total-price pull-right">{{ object.subtotal }}</span>
                             </div>
                             <div class="cart-buttons">
                                 <a href="order.html" class="btn-check-out">Checkout</a>
@@ -1434,6 +1434,8 @@
                 var item_id = $(".remove-item-"+id);
                 item_id.fadeOut(function(){
                     updateCartItemCount();
+                    $('.total-price').html(data.subtotal);
+                    // $('.cart-title').html(data.count + ' Items in my cart');
                     // updateMinicart();
                 });
 
