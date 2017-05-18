@@ -1,1 +1,1 @@
-E-commerce 2 with kuteshop styling. (not fullfilled completely)
+E-commerce shop with ajax enabled.
