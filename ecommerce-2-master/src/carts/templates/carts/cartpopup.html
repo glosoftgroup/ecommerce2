@@ -5,9 +5,9 @@
         {% if object.cartitem_set.all %}
             {% for i in object.cartitem_set.all %}
                <!-- <li>th {{ i.item.get_title }} - {{item.quantity }}</li> -->
-               <li class="product-info">
+               <li class="product-info remove-item-{{i.item.id}}">
                     <div class="p-left">
-                        <a href="#" class="remove_link"></a>
+                        <a href="#" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
                         <a href="#">
                         <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
                         </a>
