@@ -20,6 +20,7 @@ $(".item-qty").change(function(){
 		url: "{% url 'cart' %}",
 		data: data,
 		success: function(data) {
+			console.log(data);
 			$("#jquery-message").text("Added " + data.item_added + " Deleted " + data.deleted)
 			if (data.deleted){
 				$("#item-"+item).fadeOut();
@@ -80,11 +81,12 @@ $(".item-qty").change(function(){
 <div class='col-sm-8 col-sm-offset-2'>
 
 <h1>Your cart</h1>
+
 <table class='table'> 
 
 
 {% for item in object.cartitem_set.all %}
-
+<!-- {{item.item.product.title}} - {{item.item.product.id}} - {{item.item.product.get_image_url}} -->
 <tr id='item-{{ item.item.id }}'>
 
 <td>{{ item.item.get_title }}</td>
@@ -135,3 +137,4 @@ $(".item-qty").change(function(){
 
 </div>
 {% endblock %}
+<p>Almost ready to display</p>

@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^about/$', 'ecommerce2.views.about', name='about'),
     url(r'^contact/$', 'ecommerce2.views.contact', name='contact'),
     url(r'^category/$', 'ecommerce2.views.category', name='category'),
+    url(r'^minicart/$', 'newsletter.views.minicart', name='minicart'),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),

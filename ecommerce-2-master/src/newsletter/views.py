@@ -1,10 +1,13 @@
 from django.conf import settings
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.template import Context, Template, RequestContext
+from django.shortcuts import render, render_to_response
+from django.core.exceptions import ObjectDoesNotExist
 
 from products.models import ProductFeatured, Product
 from .forms import ContactForm, SignUpForm
 from .models import SignUp
+from carts.models import Cart
 
 # Create your views here.
 def home(request):
@@ -15,12 +18,17 @@ def home(request):
 	products2 = Product.objects.all().order_by("?")[:6]
 
 	form = SignUpForm(request.POST or None)
+
+	cart_id = request.session.get("cart_id")
+	request.session["cart_id"] = cart_id
+	cart = Cart.objects.get(id=cart_id)
 	context = {
 		"title": title,
 		"form": form,
 		"featured_image":featured_image,
 		"products":products,
-		"products2":products2
+		"products2":products2,
+		"object": cart
 	}
 
 
@@ -79,6 +87,15 @@ def contact(request):
 		"title_align_center": title_align_center,
 	}
 	return render(request, "forms.html", context)
+
+def minicart(request):
+	if request.is_ajax():
+		cart_id = request.session.get("cart_id")
+		request.session["cart_id"] = cart_id
+		cart = Cart.objects.get(id=cart_id)
+		template = 'carts/cartpopup.html'
+		data = {'object': cart}
+	return render_to_response(template, data, context_instance = RequestContext(request))
 
 
 

@@ -101,44 +101,40 @@
                 <a title="Compare" href="#" class="btn-compare">compare</a>
                 <a title="My wishlist" href="#" class="btn-heart">wishlist</a>
                 <div class="btn-cart" id="cart-block">
-                    <a title="My cart" href="{% url "cart" %}">Cart</a>
-                    <span id="notify" class="notify notify-right">{{ request.session.cart_item_count }}</span>
+                    <a title="My cart" href="{% url 'cart' %}">Cart</a>
+                    <span id="notify" class="notify notify-right">
+                        {{ request.session.cart_item_count }}
+                    </span>
                     <div class="cart-block">
                         <div class="cart-block-content">
-                            <h5 class="cart-title">2 Items in my cart</h5>
+                            <h5 class="cart-title">{{ request.session.cart_item_count }} Items in my cart</h5>
                             <div class="cart-block-list">
                                 <ul>
-                                <li class="product-info">
-                                    <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="{% static 'assets/data/product-100x122.jpg' %}" alt="p10">
-                                        </a>
-                                    </div>
-                                    <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice">61,19 €</p>
-                                        <p>Qty: 1</p>
-                                    </div>
-                                </li>
-                                <li class="product-info">
-                                    <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="{% static 'assets/data/product-s5-100x122.jpg' %}" alt="p10">
-                                        </a>
-                                    </div>
-                                    <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice">61,19 €</p>
-                                        <p>Qty: 1</p>
-                                    </div>
-                                </li>
-                            </ul>
+                                {% if object.cartitem_set.all %}
+                                    {% for i in object.cartitem_set.all %}
+                                       <!-- <li>th {{ i.item.get_title }} - {{item.quantity }}</li> -->
+                                       <li class="product-info">
+                                            <div class="p-left">
+                                                <a href="#" class="remove_link"></a>
+                                                <a href="#">
+                                                <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
+                                                </a>
+                                            </div>
+                                            <div class="p-right">
+                                                <p class="p-name">{{i.item.get_title}}</p><!-- <p class="p-name">{{item.item.product.title}}</p> -->
+                                                <p class="p-rice">KShs. {{ i.line_item_total }}</p>
+                                                <p>Qty: {{ i.quantity }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                {% else %} <li class="product-info">empty</li>
+                                {% endif %}
+                                
+                                </ul>
                             </div>
                             <div class="toal-cart">
-                                <span>Total</span>
-                                <span class="toal-price pull-right">122.38 €</span>
+                                <span>SubTotal - </span>
+                                <span class="toal-price pull-right">{{ object.subtotal }}</span>
                             </div>
                             <div class="cart-buttons">
                                 <a href="order.html" class="btn-check-out">Checkout</a>
@@ -678,20 +674,27 @@
                                                         </div>
                                                     </div> -->
                                                     <div class="left-block">
-                                                        <a href="{{ product.get_absolute_url }}"><img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:230px;" /></a>
+                                                        <!-- <a href="{{ product.get_absolute_url }}"><img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:230px;" /></a> -->
+                                                        <a href="javascript:;"><img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:180px;" /></a>
                                                         <div class="quick-view">
                                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                                                 <a title="Add to compare" class="compare" href="#"></a>
                                                                 <a title="Quick view" class="search" href="#"></a>
                                                         </div>
-                                                        <div class="add-to-cart" onclick="addTocart({{product.id}})">
+                                                        <div class="add-to-cart" onclick="addTocart('{{ product.id }}', '{{ product.title }}', '{{product.get_image_url}}','{{product.variation_set.first.id}}')">
                                                             <a title="Add to Cart" href="javascript:;">Add to Cart</a>
                                                         </div>
                                                     </div>
-                                                       <hr width=" 50%" style="padding:0px; margin:0 auto;" align="center" />
+                                                       <hr width=" 50%" style="padding:0px; margin:2px auto 5px;" align="center" />
                                                         <div class="price-content" style="padding:10px;height:50px;background-color: #fff;color: #adadad;position: relative;width: 100%;text-align: center;">
-                                                             <h5 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
-                                                             <span class="price product-price" style="font-size:14px;">KShs {{product.price}}</span>
+                                                             <h5 class="product-name"><a class="p-name" href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
+                                                             <span class="price product-price" style="font-size:14px;">KShs 
+                                                             {% if product.variation_set.first.sale_price %}
+                                                              {{product.variation_set.first.sale_price}}
+                                                             {% else %}
+                        
+                                                             {{product.variation_set.first.price}}
+                                                             {% endif %}</span>
                                                         </div>
                                                 </li>
                                             {% endif %}
@@ -1288,21 +1291,53 @@
         </div> 
 </footer>
 
-<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="detail_modalLabel" aria-hidden="true"> 
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
      <div class="modal-dialog"> 
       <div class="modal-content"> 
-       <div class="modal-header" style="border-bottom:none;"> 
+       <div class="modal-header"> 
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button> 
-        <h4 class="modal-title" id="detail_modalLabel"> Your Item Details</h4> 
+        <h4 class="modal-title" id="myModalLabel"> Your Cart Details : <span class="p-message"> </span></h4> 
        </div> 
-       <div class="modal-body detail_modal_body">
-       <!-- data here -->
-       </div>
+       <div class="modal-body"> 
+
+        <div id="product modal-p">
+            <div class="primary-box row">
+            
+                <div class="pb-left-column col-xs-12 col-sm-6">
+                    <!-- product-imge-->
+                    <div class="product-image">
+                        <div class="product-full">
+                           
+                           <img id="product-img" class="p-imagex" src="{% static 'assets/data/trademark-fe.jpg' %}"/>
+                        </div>
+                        <div class="product-img-thumb" id="gallery_01">
+                            
+                        </div>
+                    </div>
+                    <!-- product-imge-->
+                </div>
+                <div class="pb-right-column col-xs-12 col-sm-6">
+                    <h1 class="product-name p-namex" style="font-size:1.3em;"> </h1>
+                    
+                    <div class="product-price-group">
+                        <span class="price p-price" style="font-size:1.1em;"> </span>
+                    </div>
+                    <div class="product-desc p-quantity"> </div>
+                    <div class="reply"></div>
+                </div>
+            </div>
+            
+        </div>
+
+       </div> 
+       <div class="modal-footer"> 
+        <button type="button" class="btn btn-primary prev-btn pull-left" data-dismiss="modal">Continue Shopping</button> 
+        <a href="javascript:;" class="btn btn-primary next-btn"> Checkout </a> 
+       </div> 
+      </div><!-- /.modal-content --> 
+    </div>
     
     </div>
-        <!-- end banner bottom -->
-    </div>
-</div>
 
 <a href="#" class="scroll_top" title="Scroll to Top" style="display: inline;">Scroll</a>
 <!-- Script-->
@@ -1320,28 +1355,48 @@
 <script type="text/javascript" src="{% static 'assets/js/jquery.actual.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/theme-script.js' %}"></script>
 <script type="text/javascript">
-    function addTocart(id){
+// $(document).ready(function(){
+//      console.log({{ request.session.cart_id }});
+// });
+    function addTocart(id, name, imageurl, id2){
+        // alert('id is - '+ id+' and the name is '+name+' ** '+ id2);
+        var item_name = name;
+        console.log(imageurl);
+        var imagepath = imagepath;
         $.ajax({
             type: "GET", // "POST"
             url: "{% url 'cart' %}",
             data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    item: id,
+                    item: id2,
                     qty:1
             },
             success: function(data) {
-                // showFlashMessage(data.flash_message);
+                console.log(data);
                 toastr.success(data.flash_message, 'Success', {timeOut: 5000});
                 updateCartItemCount();
-                console.log(data.flash_message);
+                updateMinicart();
+                $('.p-message').html(data.flash_message);
+                $('.p-namex').html('Name: '+ name);
+                $('.p-imagex').attr('src', imageurl);
+                $('.p-price').html('Price: KShs'+ data.line_total);
+                $('.p-quantity').html('Qty: '+data.item_quantity);
+
+                $('#myModal').modal();
+                // $('#myModal').on('hide.bs.modal', function () { 
+                //   updateCartItemCount();
+                // });
+                // console.log(data.flash_message);
+                
+
+               
             }, 
-            error: function(data, error) {
+            error: function(response, error) {
                 // console.log(response)
                 console.log(error);
-                toastr.error('cannot process', 'Error', {timeOut: 5000});
-                // $("#add-form").submit()
+                toastr.error('cannot process', 'Error', {timeOut: 500});
             }
-        })        
+        });        
     }
     function updateCartItemCount(){
         var badge = $("#notify");
@@ -1353,14 +1408,30 @@
                 badge.text(data.count);
                 console.log(data.count);
             },
-            error: function(response, error) {
-                console.log(response)
+            error: function(data, error) {
+                console.log(data);
                 console.log(error);
             }
 
-        })
+        });
 
      }
+    function updateMinicart(){      
+        // $.ajax({
+        //     type: "GET",
+        //     url: "{% url 'minicart' %}",
+        //     success: function(data){
+        //         badge = $(".cart-block").html(data);
+        //         console.log(data);
+        //     },
+        //     error: function(data, error) {
+        //         console.log(data);
+        //         console.log(error);
+        //     }
+
+        // });
+        $(".cart-block").html('&nbsp;').load("{% url 'minicart' %}");
+    }
     
 </script>
 </body>
