@@ -1,5 +1,5 @@
 <div class="cart-block-content">
-    <h5 class="cart-title"><span class="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
+    <h5 class="cart-title"><span id="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
     <div class="cart-block-list">
         <ul>
         <!-- {% if object.cartitem_set.all %} -->
@@ -7,7 +7,7 @@
                <!-- <li>th {{ i.item.get_title }} - {{item.quantity }}</li> -->
                <li class="product-info remove-item-{{i.item.id}}">
                     <div class="p-left">
-                        <a href="#" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
+                        <a href="javascript:;" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
                         <a href="#">
                         <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
                         </a>

@@ -108,7 +108,7 @@
                     <div class="cart-block">
                         <div class="cart-block-content">
                         {% if object.cartitem_set.all and request.session.cart_item_count %}
-                            <h5 class="cart-title"><span class="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
+                            <h5 class="cart-title"><span id="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
                             <div class="cart-block-list">
                                 <ul>
                                 <!-- {% if object.cartitem_set.all %} -->
@@ -1362,9 +1362,7 @@ $(document).ready(function(){
      console.log({{ request.session.cart_id }});
 });
     function addTocart(id, name, imageurl, id2){
-        // alert('id is - '+ id+' and the name is '+name+' ** '+ id2);
         var item_name = name;
-        console.log(imageurl);
         var imagepath = imagepath;
         $.ajax({
             type: "GET", // "POST"
@@ -1385,14 +1383,7 @@ $(document).ready(function(){
                 $('.p-quantity').html('Qty: '+data.item_quantity);
 
                 $('#myModal').modal();
-
-                $('#myModal').on('hide.bs.modal', function () { 
-                    toastr.success(data.flash_message, 'Success', {timeOut: 5000});
-                });
-                // console.log(data.flash_message);
-                
-
-               
+                toastr.success(data.flash_message, 'Success', { showDuration: 2000,hideDuration: 1000, timeOut: 2000,});           
             }, 
             error: function(response, error) {
                 // console.log(response)
@@ -1403,16 +1394,20 @@ $(document).ready(function(){
     }
     function updateCartItemCount(){
         var badge = $("#notify");
+        var my_count = $('#my-count');
 
         $.ajax({
             type: "GET",
             url: "{% url 'item_count' %}",
             success: function(data){
                 badge.text(data.count);
-                console.log(data.count);
-                $('.my-count').text(data.count);
+                // console.log(data.count);
+                my_count.text(data.count);
+                /**- if cart qty is 0-**/
                 if(data.count == 0){
-                  $('.cart-block-content').html('Cart is empty');
+                  $('.cart-block-content').fadeOut(function(){
+                    $('.cart-block-content').html('Cart is empty').fadeIn();
+                  });                 
                 }
             },
             error: function(data, error) {
