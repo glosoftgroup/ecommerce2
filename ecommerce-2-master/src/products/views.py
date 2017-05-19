@@ -157,8 +157,8 @@ class ProductListView(FilterMixin, ListView):
 import random
 class ProductDetailView(DetailView):
 	model = Product
-	#template_name = "product.html"
 	#template_name = "<appname>/<modelname>_detail.html"
+	template_name = "products/product_detail.html"
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
 		instance = self.get_object()
@@ -170,18 +170,18 @@ class ProductDetailView(DetailView):
 
 
 
-def product_detail_view_func(request, id):
-	#product_instance = Product.objects.get(id=id)
-	product_instance = get_object_or_404(Product, id=id)
-	try:
-		product_instance = Product.objects.get(id=id)
-	except Product.DoesNotExist:
-		raise Http404
-	except:
-		raise Http404
+# def product_detail_view_func(request, id):
+# 	#product_instance = Product.objects.get(id=id)
+# 	product_instance = get_object_or_404(Product, id=id)
+# 	try:
+# 		product_instance = Product.objects.get(id=id)
+# 	except Product.DoesNotExist:
+# 		raise Http404
+# 	except:
+# 		raise Http404
 
-	template = "products/product_detail.html"
-	context = {	
-		"object": product_instance
-	}
-	return render(request, template, context)
+# 	template = "product/product_detail.html"
+# 	context = {	
+# 		"object": product_instance
+# 	}
+# 	return render(request, template, context)
