@@ -1,34 +1,34 @@
 <div class="cart-block-content">
-    <h5 class="cart-title"><span id="my-count"></span> Items in my cart</h5>
-    <div class="cart-block-list">
-        <ul>
-        <!-- {% if object.cartitem_set.all %} -->
-            {% for i in object.cartitem_set.all %}
-               <!-- <li>th {{ i.item.get_title }} - {{item.quantity }}</li> -->
-               <li class="product-info remove-item-{{i.item.id}}">
-                    <div class="p-left">
-                        <a href="javascript:;" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
-                        <a href="#">
-                        <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
-                        </a>
-                    </div>
-                    <div class="p-right">
-                        <p class="p-name">{{item.item.product.title}}</p>
-                        <p class="p-rice">KShs. {{ i.line_item_total }}</p>
-                        <p>Qty: {{ i.quantity }}</p>
-                    </div>
-                </li>
-            {% endfor %}
-        <!-- {% else %} <li class="product-info">empty</li> -->
-        <!-- {% endif %} -->
-        
-        </ul>
-    </div>
-    <div class="toal-cart">
-        <span>SubTotal - </span>
-        <span class="total-price pull-right">{{ object.subtotal }}</span>
-    </div>
-    <div class="cart-buttons">
-        <a href="order.html" class="btn-check-out">Checkout</a>
-    </div>
+{% if object.cartitem_set.count > 0 %}
+        <h5 class="cart-title"><span id="my-count">{{object.cartitem_set.count}}</span> Items in my cart</h5>
+        <div class="cart-block-list">
+            <ul>
+                {% for i in object.cartitem_set.all %}
+                   <li class="product-info remove-item-{{i.item.id}}">
+                        <div class="p-left">
+                            <a href="javascript:;" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
+                            <a href="#">
+                            <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
+                            </a>
+                        </div>
+                        <div class="p-right">
+                            <p class="p-name">{{i.item.get_title}}</p>
+                            <p class="p-rice">KShs. {{ i.line_item_total }}</p>
+                            <p>Qty: {{ i.quantity }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            
+            </ul>
+        </div>
+        <div class="toal-cart">
+            <span>SubTotal - </span>
+            <span class="total-price pull-right">{{ object.subtotal }}</span>
+        </div>
+        <div class="cart-buttons">
+            <a href="order.html" class="btn-check-out">Checkout</a>
+        </div>
+    {% else %} 
+        Cart is empty
+    {% endif %}
 </div>

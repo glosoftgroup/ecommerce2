@@ -10,10 +10,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
+    <!-- base styles for all files-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/lib/bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/lib/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/lib/select2/css/select2.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/lib/owl.carousel/owl.carousel.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/lib/jquery-ui/jquery-ui.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/lib/toastr/toastr.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/animate.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/reset.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/option6.css' %}" />
+    {% block extra_links %}{% endblock %}
 
-    <title>{% block head_title %}eCommerce 2{% endblock %}</title>
-
-    {% include 'head_css.html' %}
+    <title>{% block head_title %}Shop{% endblock %}</title>
 
       <style>
       {% block style %}{% endblock %}
@@ -23,45 +34,376 @@
 
   </head>
 
-  <body>
-  {% include 'navbar.html' %}
+ {% block body_tag%} <body class="option6">{% endblock%}
+<!-- header -->
+<div id="header" class="header">
+<!-- top header-->
+  <div class="top-header">
+      <div class="container">
+          <div class="currency ">
+              <div class="dropdown">
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">USD</a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Dollar</a></li>
+                      <li><a href="#">Euro</a></li>
+                    </ul>
+              </div>
+          </div>
+          <div class="language ">
+              <div class="dropdown">
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                    <img alt="email" src="{% static 'assets/images/fr.jpg' %}" />French
+                    
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#"><img alt="email" src="{% static 'assets/images/en.jpg' %}" />English</a></li>
+                      <li><a href="#"><img alt="email" src="{% static 'assets/images/fr.jpg' %}" />French</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="top-bar-social">
+              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-pinterest"></i></a>
+              <a href="#"><i class="fa fa-google-plus"></i></a>
+          </div>
+          <div class="support-link">
+              <a href="#">Abount Us</a>
+              <a href="#">Support</a>
+          </div>
 
-{% if messages %}
+          <div id="user-info-top" class="user-info pull-right">
+              <div class="dropdown">
+                  <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
+                  <ul class="dropdown-menu mega_dropdown" role="menu">
+                      <li><a href="login.html">Login</a></li>
+                      <li><a href="#">Compare</a></li>
+                      <li><a href="#">Wishlists</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- top-header -->
+      <!-- main header -->
+    <div class="container main-header">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 logo">
+                <a href="index.html"><img alt="Kute shop" src="{% static 'assets/data/option6/logo.png' %}" /></a>
+            </div>
+            <div class="col-xs-7 col-sm-8 col-md-7 header-search-box">
+                <form class="form-inline">
+                      <!-- <div class="form-group form-category">
+                        <select class="select-category">
+                            <option value="2">All Categories</option>
+                            <option value="1">Men</option>
+                            <option value="2">Women</option>
+                        </select>
+                      </div> -->
+                      <div class="form-group input-serach">
+                        <input type="text"  placeholder="Keyword here...">
+                      </div>
+                      <button type="submit" class="pull-right btn-search"></button>
+                </form>
+                <!-- 
+                <div class="keyword">
+                    <p class="lebal">Keywords:</p>
+                    <p>
+                        <a href="#">T-shirt, </a>
+                        <a href="#">Leggings, </a>
+                        <a href="#">Cotton, ...</a>
+                    </p>
+                </div> -->
+            </div>
+            <div class="col-xs-5 col-sm-3 col-md-2 group-button-header">
+                <a title="Compare" href="#" class="btn-compare">compare</a>
+                <a title="My wishlist" href="#" class="btn-heart">wishlist</a>
+                <div class="btn-cart" id="cart-block">
+                    <a title="My cart" href="{% url 'cart' %}">Cart</a>
+                    <span id="notify" class="notify notify-right">
+                        {{ request.session.cart_item_count }}
+                    </span>
+                    <div class="cart-block">
+                        <div class="cart-block-content">
+                        {% if object.cartitem_set.all and request.session.cart_item_count != None %}
+                            <h5 class="cart-title"><span id="my-count">{{ request.session.cart_item_count }}</span> Items in my cart</h5>
+                            <div class="cart-block-list">
+                                <ul>
+                                    {% for i in object.cartitem_set.all %}
+                                       <li class="product-info remove-item-{{i.item.id}}">
+                                            <div class="p-left">
+                                                <a href="javascript:;" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
+                                                <a href="#">
+                                                <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
+                                                </a>
+                                            </div>
+                                            <div class="p-right">
+                                                <p class="p-name">{{i.item.get_title}}</p>
+                                                <p class="p-rice">KShs. {{ i.line_item_total }}</p>
+                                                <p>Qty: {{ i.quantity }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                
+                                </ul>
+                            </div>
+                            <div class="toal-cart">
+                                <span>SubTotal - </span>
+                                <span class="total-price pull-right">{{ object.subtotal }}</span>
+                            </div>
+                            <div class="cart-buttons">
+                                <a href="order.html" class="btn-check-out">Checkout</a>
+                            </div>
+                        {% else %} 
+                            Cart is empty
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
 
-<div class='container'>
-<div class='alert alert-success text-center alert-dismissible'>
- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-{% for message in messages %}
-  <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p><br/>
-  {% endfor %}
+            </div>
+        </div>        
+    </div>
+    <!-- end main menu -->
+    <!--nav top menu-->
+    <div id="nav-top-menu" class="nav-top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3" id="box-vertical-megamenus">
+                    <div class="box-vertical-megamenus">
+                    <h4 class="title">
+                        <span class="btn-open-mobile"><i class="fa fa-bars"></i></span>
+                    </h4>
+                    <div class="vertical-menu-content is-home">
+                        <ul class="vertical-menu-list">
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/12.png' %}">Electronics</a></li>
+                            <li>
+                                <a class="parent" href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/13.png' %}">Sports &amp; Outdoors</a>
+                                <div class="vertical-dropdown-menu">
+                                    <div class="vertical-groups col-sm-12">
+                                        <div class="mega-group col-sm-4">
+                                            <h4 class="mega-group-header"><span>Tennis</span></h4>
+                                            <ul class="group-link-default">
+                                                <li><a href="#">Tennis</a></li>
+                                                <li><a href="#">Coats &amp; Jackets</a></li>
+                                                <li><a href="#">Blouses &amp; Shirts</a></li>
+                                                <li><a href="#">Tops &amp; Tees</a></li>
+                                                <li><a href="#">Hoodies &amp; Sweatshirts</a></li>
+                                                <li><a href="#">Intimates</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="mega-group col-sm-4">
+                                            <h4 class="mega-group-header"><span>Swimming</span></h4>
+                                            <ul class="group-link-default">
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Coats &amp; Jackets</a></li>
+                                                <li><a href="#">Blouses &amp; Shirts</a></li>
+                                                <li><a href="#">Tops &amp; Tees</a></li>
+                                                <li><a href="#">Hoodies &amp; Sweatshirts</a></li>
+                                                <li><a href="#">Intimates</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="mega-group col-sm-4">
+                                            <h4 class="mega-group-header"><span>Shoes</span></h4>
+                                            <ul class="group-link-default">
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Coats &amp; Jackets</a></li>
+                                                <li><a href="#">Blouses &amp; Shirts</a></li>
+                                                <li><a href="#">Tops &amp; Tees</a></li>
+                                                <li><a href="#">Hoodies &amp; Sweatshirts</a></li>
+                                                <li><a href="#">Intimates</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="mega-custom-html col-sm-12">
+                                            <a href="#"><img src="{% static 'assets/data/banner-megamenu.jpg' %}" alt="Banner"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/14.png' %}">Smartphone &amp; Tablets</a></li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/15.png' %}">Health &amp; Beauty Bags</a></li>
+                            <li>
+                                <a class="parent" href="#">
+                                <img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/16.png' %}">Shoes &amp; Accessories</a>
+                                <div class="vertical-dropdown-menu">
+                                        <div class="vertical-groups col-sm-12">
+                                            <div class="mega-group col-sm-12">
+                                                <h4 class="mega-group-header"><span>Special products</span></h4>
+                                                <div class="row mega-products">
+                                                    <div class="col-sm-3 mega-product">
+                                                        <div class="product-avatar">
+                                                            <a href="#"><img src="{% static 'assets/data/p10.jpg' %}" alt="product1"></a>
+                                                        </div>
+                                                        <div class="product-name">
+                                                            <a href="#">Fashion hand bag</a>
+                                                        </div>
+                                                        <div class="product-price">
+                                                            <div class="new-price">$38</div>
+                                                            <div class="old-price">$45</div>
+                                                        </div>
+                                                        <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mega-product">
+                                                        <div class="product-avatar">
+                                                            <a href="#"><img src="{% static 'assets/data/p11.jpg' %}" alt="product1"></a>
+                                                        </div>
+                                                        <div class="product-name">
+                                                            <a href="#">Fashion hand bag</a>
+                                                        </div>
+                                                        <div class="product-price">
+                                                            <div class="new-price">$38</div>
+                                                            <div class="old-price">$45</div>
+                                                        </div>
+                                                        <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mega-product">
+                                                        <div class="product-avatar">
+                                                            <a href="#"><img src="{% static 'assets/data/p12.jpg' %}" alt="product1"></a>
+                                                        </div>
+                                                        <div class="product-name">
+                                                            <a href="#">Fashion hand bag</a>
+                                                        </div>
+                                                        <div class="product-price">
+                                                            <div class="new-price">$38</div>
+                                                            <div class="old-price">$45</div>
+                                                        </div>
+                                                        <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mega-product">
+                                                        <div class="product-avatar">
+                                                            <a href="#"><img src="{% static 'assets/data/p13.jpg' %}" alt="product1"></a>
+                                                        </div>
+                                                        <div class="product-name">
+                                                            <a href="#">Fashion hand bag</a>
+                                                        </div>
+                                                        <div class="product-price">
+                                                            <div class="new-price">$38</div>
+                                                            <div class="old-price">$45</div>
+                                                        </div>
+                                                        <div class="product-star">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/17.png' %}">Toys &amp; Hobbies</a></li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/18.png' %}">Computers &amp; Networking</a></li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/19.png' %}">Laptops &amp; Accessories</a></li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/20.png' %}">Jewelry &amp; Watches</a></li>
+                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/21.png' %}">Flashlights &amp; Lamps</a></li>
+                            <li>
+                                <a href="#">
+                                    <img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/21.png' %}">
+                                    Cameras &amp; Photo
+                                </a>
+                            </li>
+                            <li class="cat-link-orther">
+                                <a href="#">
+                                    <img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/22.png' %}">
+                                    Television
+                                </a>
+                            </li>
+                            <li class="cat-link-orther">
+                                <a href="#">
+                                    <img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/12.png' %}">Computers &amp; Networking
+                                </a>
+                            </li>
+                            <li class="cat-link-orther">
+                                <a href="#">
+                                    <img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/14.png' %}">
+                                    Toys &amp; Hobbies
+                                </a>
+                            </li>
+                            <li class="cat-link-orther">
+                            <a href="#"><img class="icon-menu" alt="Funky roots" src="{% static 'assets/data/17.png' %}">Jewelry &amp; Watches</a></li>
+                        </ul>
+                        <div class="all-category"><span class="open-cate">All Categories</span></div>
+                    </div>
+                </div>
+                </div>
+                <div id="main-menu" class="col-sm-9 main-menu">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                                <a class="navbar-brand" href="#">MENU</a>
+                            </div>
+                            <div id="navbar" class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav">
+                                    
+                                    {% block navbar_li%}{% endblock %}
+                                </ul>
+                                <!-- <ul class="nav navbar-nav navbar-right">
+                                    <li><a class="link-buytheme" href="#"><i class="fa fa-angle-double-right"></i> Buy This Template</a></li>
+                                  </ul> -->
+                            </div><!--/.nav-collapse -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!-- userinfo on top-->
+            <div id="form-search-opntop">
+            </div>
+            <!-- userinfo on top-->
+            <div id="user-info-opntop">
+            </div>
+            <!-- CART ICON ON MMENU -->
+            <div id="shopping-cart-box-ontop">
+                <i class="fa fa-shopping-cart"></i>
+                <div class="shopping-cart-box-ontop-content"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end nav top menu-->
+
 </div>
+<!--  header -->
 
-</div>
-{% endif %}
+<!-- content -->
+{% block content %}{% endblock %}
+<!-- end content-->
 
-{% block jumbotron %}
-          
-            {% endblock %}
-    <div class="container">
-            
+<!-- footer -->
+{% include "footer.html"%}
+<!-- end footer -->
 
-          
-            {% block content %}
+ {% include "javascript.html" %}
+ <!-- extra js block -->
+ {% block js %}{% endblock %}
+ <!--end extra js block-->
 
-            {% endblock %}
-              
+<!-- jquery js block -->
+ {% block jquery %}
 
-    </div> <!-- /container -->
-
-    {% include "javascript.html" %}
-    
-    <script>
-    $(document).ready(function(){
-        {% block jquery %}
-        {% endblock %}
-    });
-
-    </script>
+ {% endblock %}
+ <!--end jquery js block--> 
     
   </body>
 </html>

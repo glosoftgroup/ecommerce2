@@ -93,16 +93,16 @@ $("#submit-btn").click(function(event){
 		{% for vari_obj in object.variation_set.all %}
 		<option  data-sale-price="{{ vari_obj.sale_price }}" data-price="{{ vari_obj.price }}" value="{{ vari_obj.id }}">{{ vari_obj }}</option>
 		{% endfor %}
-		</select>
+	</select>
 
 	{% else %}
 		<input type="hidden" name='item' value='{{ object.variation_set.first.id }}' />
-			<h3 id='price'>{% if object.variation_set.first.sale_price %}
-			{{ object.variation_set.first.sale_price  }}
-			<small class='og-price'>{{ object.variation_set.first.price }}</small>
+			<h3 id='price'>
+			{% if object.variation_set.first.sale_price %}
+				{{ object.variation_set.first.sale_price  }}
+				<small class='og-price'>{{ object.variation_set.first.price }}</small>
 			{% else %}
-			
-			{{ object.variation_set.first.price }}
+				{{ object.variation_set.first.price }}
 			{% endif %}
 		</h3>
 
