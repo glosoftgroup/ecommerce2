@@ -28,6 +28,12 @@ body {
   display: flex;
   flex-direction: column;
 }
+.process-btns{
+  width: 1100px;
+  margin: 10px auto;
+  /*flex-direction: column;*/
+  text-align: center;
+}
 
 /*shopping cart items*/
 .title {
@@ -38,11 +44,20 @@ body {
   font-size: 18px;
   font-weight: 400;
 }
- 
+.totals{
+  /*height: 60px;*/
+  border-top: 1px solid #E1E8EE;
+  padding: 20px 30px;
+  color: #5E6977;
+  font-size: 16px;
+  font-weight: 400;
+  text-align:right;
+}
 .item {
   padding: 20px 30px;
   height: 120px;
   display: flex;
+  margin-bottom: 3px;
 }
  
 .item:nth-child(3) {
@@ -124,13 +139,19 @@ body {
   font-weight: 300;
 }
  
-button[class*=btn] {
+.plus-btn, .minus-btn {
   width: 30px;
   height: 30px;
   background-color: #E1E8EE;
   border-radius: 6px;
   border: none;
   cursor: pointer;
+}
+.continue-shopping{
+	float: left;
+}
+.continue-checkout{
+	float: right;
 }
 .minus-btn i {
   /*margin-bottom: 3px;*/
@@ -147,7 +168,7 @@ input:focus {
 }
 
 /*total price*/
-.total-price {
+.total-p {
   width: 83px;
   padding-top: 27px;
   text-align: center;
@@ -155,7 +176,48 @@ input:focus {
   color: #43484D;
   font-weight: 300;
 }
-
+/* style the buttons */
+.btn{
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+	border: none;
+	transition: all 0.4s;
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	white-space: nowrap;
+	padding: 6px 16px;
+	font-size: 15px;
+	line-height: 1.846;
+	border-radius: 3px;
+	outline: 0;
+}
+/*.btn:focus{outline: 0;}*/
+.btn:focus, .btn:hover, .btn:active{outline: 0;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);}
+button::-moz-focus-inner { border: 0; }
+.btn-default:hover, .btn-default:focus {
+    background-color: #f0f0f0;
+    color: #444444;
+	border-color: rgba(0, 0, 0, 0);
+}
+.btn-default, .btn-default:active {
+    background-color: #ffffff;
+    color: #444444;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #0d87e9;
+    color: #ffffff;
+	border-color: rgba(0, 0, 0, 0);
+}
+.btn-primary {
+    background-color: #2196f3;
+    color: #ffffff;
+}
+/* end style the buttons */
 /*responsiveness*/
 @media (max-width: 800px) {
   .shopping-cart {
@@ -168,6 +230,7 @@ input:focus {
     flex-wrap: wrap;
     justify-content: center;
   }
+  .totals{text-align: center;}
   .image img {
     width: 50%;
   }
@@ -255,100 +318,53 @@ input:focus {
 </div>
 <!-- second row-->
 <div class="row">
-<div class="shopping-cart">
-      <!-- Title -->
-      <div class="title">
-        Your Shopping Cart
-      </div>
- 
-      <!-- Product #1 -->
-      <div class="item" id="item-1">
-        <div class="buttons">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
- 
-        <div class="image">
-          <img src="{% static 'assets/data/men.png' %}" alt="" />
-        </div>
- 
-        <div class="description">
-          <span>Common Projects</span>
-          <span>Bball High</span>
-          <span>White</span>
-        </div>
- 
-        <div class="quantity">
-          <button class="plus-btn" type="button" name="button">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-          <input type="text" name="name" value="1">
-          <button class="minus-btn" type="button" name="button">
-            <i class="fa fa-minus" aria-hidden="true"></i>
-          </button>
-        </div>
- 
-        <div class="total-price">$549</div>
-      </div>
- 
-      <!-- Product #2 -->
-      <div class="item" id="item-2">
-        <div class="buttons">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
- 
-        <div class="image">
-          <img src="{% static 'assets/data/women.png' %}" alt=""/>
-        </div>
- 
-        <div class="description">
-          <span>Maison Margiela</span>
-          <span>Future Sneakers</span>
-          <span>White</span>
-        </div>
- 
-        <div class="quantity">
-          <button class="plus-btn" type="button" name="button">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-          <input type="text" name="name" value="1">
-          <button class="minus-btn" type="button" name="button">
-            <i class="fa fa-minus" aria-hidden="true"></i>
-          </button>
-        </div>
- 
-        <div class="total-price">$870</div>
-      </div>
- 
-      <!-- Product #3 -->
-      <div class="item" id="item-3">
-        <div class="buttons">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
- 
-        <div class="image">
-          <img src="{% static 'assets/data/kid.png' %}" alt="" />
-        </div>
- 
-        <div class="description">
-          <span>Our Legacy</span>
-          <span>Brushed Scarf</span>
-          <span>Brown</span>
-        </div>
- 
-        <div class="quantity">
-          <button class="plus-btn" type="button" name="button" onclick="decrease()">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-          <input type="text" name="name" value="1">
-          <button class="minus-btn" type="button" name="button" onclick="increase()">
-            <i class="fa fa-minus" aria-hidden="true"></i>
-          </button>
-        </div>
- 
-        <div class="total-price">$349</div>
-      </div>
-    </div>
-
+	<div class="shopping-cart animated fadeInUp">
+	      <!-- Title -->
+	      <div class="title">
+	        Your Shopping Cart
+	      </div>
+	      {% for item in object.cartitem_set.all %}
+	      <!-- Product #3 -->
+	      <div class="item animated" id="item-{{ item.item.id }}">
+	        <div class="buttons" onclick="removeCartItem({{ item.item.id }})">
+	          <i class="fa fa-times" aria-hidden="true"></i>
+	        </div>
+	 
+	        <div class="image">
+	          <img src="{{item.item.product.get_image_url}}" alt="" style="height: 100px;width: auto;" />
+	        </div>
+	 
+	        <div class="description">
+	          <span>{{item.item.product.title}}</span>
+	          <!-- <span>Brushed Scarf</span> -->
+	          <span>{{ item.item.get_title }}</span>
+	        </div>
+	 
+	        <div class="quantity">
+	          <button class="plus-btn" type="button" name="button" onclick="increase({{ item.item.id }})">
+	            <i class="fa fa-plus" aria-hidden="true"></i>
+	          </button>
+	          <input type="text" class='val_change' name='qty' value='{{ item.quantity }}' id="val_{{ item.item.id }}">
+	          <input type='hidden' name='item' value='{{ item.item.id }}' />
+	          <button class="minus-btn" type="button" name="button" onclick="decrease({{ item.item.id }})">
+	            <i class="fa fa-minus" aria-hidden="true"></i>
+	          </button>
+	        </div>
+	 
+	        <div class="total-p">KShs <span id='it-{{ item.item.id }}'>{{ item.line_item_total }}</span></div>
+	      </div>
+	      <!-- end item-->
+	      {% endfor %}
+	      <div class="totals">
+	       <p> Sub-Total : KShs <span id='st'>{{ object.subtotal }}</span></p>
+	       <p> Total Tax(Estimated) :<span id='tt'>{{ object.tax_total }}</span></p>
+	       <p> Total : KShs <span id='ct'>{{ object.total }}</span></p>
+	      </div>
+	    </div>
+	    <div class="process-btns">
+	         <button class="b btn btn-default ripple continue-shopping animated slideInLeft">Continue Shopping</button>
+	         <button class="b btn btn-primary ripple-light continue-checkout animated slideInRight">Proceed to checkout</button>
+	    </div>
    </div>
 <!--end of second row-->
 </div>
@@ -416,6 +432,112 @@ $(".item-qty").change(function(){
 
 
 });
+function decrease(id){
+	
+	var inputValue = $('#val_'+id).val();
+
+	if (inputValue > 1) {
+        inputValue--;
+    } else {
+        inputValue = 0;
+    }
+    $('#val_'+id).val(inputValue);
+    process(id, inputValue);
+	// alert(inputValue);
+}
+function increase(id){
+	var inputValue = $('#val_'+id).val();
+
+	if (inputValue >= 0) {
+        inputValue++;
+    } else {
+        inputValue = 100;
+    }
+     $('#val_'+id).val(inputValue);
+     process(id, inputValue);
+}
+    function removeCartItem(id){
+        alert(id);
+        $.ajax({
+            type: "GET",
+            url: "{% url 'cart' %}",
+            data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    item: id,
+                    qty:1,
+                    delete:'True'
+            },
+            success: function(data){
+                var item = $("#item-"+id);
+                // item.addClass( "fadeOut" );
+                // item_id.fadeOut(function(){
+                //     // updateCartItemCount();
+                //     $('.total-price').html(data.subtotal);
+                //     // $('.cart-title').html(data.count + ' Items in my cart');
+                //     // updateMinicart();
+                // });
+
+                // alert('deleted')
+                console.log(item+'deleted');
+            },
+            error: function(data, error) {
+                console.log(data);
+                console.log(error);
+            }
+
+        });
+    }
+
+    function process(item, qty){
+    	var data = {
+			item: item,
+			qty: qty
+		}
+	// console.log(data);
+		$.ajax({
+			type: "GET", // "POST"
+			url: "{% url 'cart' %}",
+			data: data,
+			success: function(data) {
+				console.log(data);
+				$("#jquery-message").text("Added " + data.item_added + " Deleted " + data.deleted)
+				if (data.deleted){
+					$("#item-"+item).fadeOut();
+					$("#st").text(data.subtotal);
+					$("#tt").text(data.tax_total);
+					$("#ct").text(data.cart_total);
+				} else {
+					$("#it-"+item).text(data.line_total);
+					$("#st").text(data.subtotal);
+					$("#tt").text(data.tax_total);
+					$("#ct").text(data.cart_total);
+				}
+
+				if (data.total_items == 0 ) {
+					$(".table").fadeOut()
+					var template = "{% include 'carts/empty_cart.html' %}";
+					$(".main-content").html(template);
+
+				}
+
+				var message = ""
+				if (data.item_added) {
+					message = "New item added"
+				} else if (data.deleted){
+					message = "Item removed"
+				} else {
+					message = "Item updated"
+				}
+				toastr.success(message, 'success');
+				updateCartItemCount()
+				}, 
+			error: function(response, error) {
+				// console.log(response)
+				// console.log(error)
+				$("#add-form").submit()
+			}
+		});
+    }
 /* end of click buttons */
 </script>
 {% endblock %}
