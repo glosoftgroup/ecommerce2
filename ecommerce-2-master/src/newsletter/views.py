@@ -107,6 +107,11 @@ def minicart(request):
 		data = {'object': cart}
 	return render_to_response(template, data, context_instance = RequestContext(request))
 
+def emptycart(request):
+	if request.is_ajax():
+		template = 'carts/empty_cart.html'
+	return render_to_response(template, {}, context_instance = RequestContext(request))
+
 
 
 

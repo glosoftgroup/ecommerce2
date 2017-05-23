@@ -1,1 +1,7 @@
-<!-- MAKE SURE YOUR DATA IS ESCAPED --><div class='col-sm-6 col-sm-offset-3 text-center'><h1>Your cart is empty</h1><p>Continue Shopping</p></div>
+{% load staticfiles %}
+<!-- MAKE SURE YOUR DATA IS ESCAPED -->
+<div class='shopping-cart animated fadeInUp text-center' style="padding: 20px;">
+<img src="{% static 'assets/data/cart2.gif' %}" alt="Empty Cart" style="height: 80px;width: 80px;margin:0 auto;">
+	<h2>Your cart is empty</h2>
+	<a href="{% url 'home' %}" style="margin: 20px auto;"><button class="b btn btn-cart ripple-light continue-shopping animated slideInLeft">Continue Shopping</button></a>
+</div>
