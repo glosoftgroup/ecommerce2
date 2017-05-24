@@ -153,7 +153,7 @@
                                 <span class="total-price pull-right">{{ object.subtotal }}</span>
                             </div>
                             <div class="cart-buttons">
-                                <a href="order.html" class="btn-check-out">Checkout</a>
+                                <a href="{% url 'cart' %}" class="btn-check-out">Checkout</a>
                             </div>
                         {% else %} 
                             Cart is empty

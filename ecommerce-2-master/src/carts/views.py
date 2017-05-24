@@ -43,7 +43,7 @@ class ItemCountView(View):
 				cart = Cart.objects.get(id=cart_id)
 				count = cart.items.count()
 			request.session["cart_item_count"] = count
-			return JsonResponse({"count": count})
+			return JsonResponse({"count": count, "cart_id":cart_id})
 		else:
 			raise Http404
 

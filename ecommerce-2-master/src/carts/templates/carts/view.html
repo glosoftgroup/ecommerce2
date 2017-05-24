@@ -277,7 +277,7 @@ button::-moz-focus-inner { border: 0; }
 	      {% for item in object.cartitem_set.all %}
 	      <!-- Product #3 -->
 	      <div class="item" id="productItem-{{ item.item.id }}">
-	        <div class="buttons" onclick="removeCartItem({{ item.item.id }})">
+	        <div class="buttons" onclick="removeCartPageItem({{ item.item.id }})">
 	          <i class="fa fa-times" aria-hidden="true"></i>
 	        </div>
 	 
@@ -320,11 +320,42 @@ button::-moz-focus-inner { border: 0; }
    </div>
 <!--end of second row-->
 </div>
+<!-- item cart modal -->
+ <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+     <div class="modal-dialog modal-sm"> 
+      <div class="modal-content"> 
+       <div class="modal-header"> 
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button> 
+        <h4 class="modal-title" id="myModalLabel"> Confirm </h4> 
+       </div> 
+       <div class="modal-body"> 
+         Are you sure?
+       </div> 
+       <div class="modal-footer"> 
+        <button type="button" class="btn btn-primary prev-btn pull-left" data-dismiss="modal">No</button> 
+        <button type="button" class="btn btn-warning pull-right" id="yes"> Yes</button>
+       </div> 
+      </div><!-- /.modal-content --> 
+    </div>
+    
+    </div>
+<!-- end item cart model -->
 {% endblock %}
 
 
 {% block jquery %}
 <script>
+/*-- on item qty change --*/
+  $(".val_change").on("keyup paste", function(){
+    item_id = $(this).next().val();
+    val = $(this).val();
+    if(val.length !== 0){
+      process(item_id, val);
+      console.log('id is '+ item_id+' and value is'+val);
+    }
+    
+});
+
 function decrease(id){
 	
 	var inputValue = $('#val_'+id).val();
@@ -336,7 +367,6 @@ function decrease(id){
     }
     $('#val_'+id).val(inputValue);
     process(id, inputValue);
-	// alert(inputValue);
 }
 function increase(id){
 	var inputValue = $('#val_'+id).val();
@@ -349,7 +379,7 @@ function increase(id){
      $('#val_'+id).val(inputValue);
      process(id, inputValue);
 }
-    function removeCartItem(id){
+    function removeCartPageItem(id){
         $.ajax({
             type: "GET",
             url: "{% url 'cart' %}",
@@ -364,82 +394,70 @@ function increase(id){
                 item.addClass( "animated bounceOut");
                 item.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                 	$(this).remove();
+                  toastr.success('Item removed successfully', 'success');
+                  if (data.deleted){
+                    $("#st").text(data.subtotal);
+                    $("#tt").text(data.tax_total);
+                    $("#ct").text(data.cart_total);
+                  }
                 });
                 if (data.total_items == 0 ) {
                 	item.addClass( "animated bounceOut");
 	                item.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
 	                	$(this).remove();
 	                	$(".shopping-cart").fadeOut();
-						$(".main-content").html('&nbsp;').load("{% url 'emptycart' %}");
-	                });					
-				}
-                // item.fadeOut();
-                // item_id.fadeOut(function(){
-                //     // updateCartItemCount();
-                //     $('.total-price').html(data.subtotal);
-                //     // $('.cart-title').html(data.count + ' Items in my cart');
-                //     // updateMinicart();
-                // });
+						        $(".main-content").html('&nbsp;').load("{% url 'emptycart' %}");
+	                });
 
-                // alert('deleted')
-                // console.log(id+'deleted');
+				        }
+                updateCartItemCount();
+                updateMinicart();
             },
-            error: function(data, error) {
-                console.log(data);
+            error: function(error){
                 console.log(error);
             }
 
         });
     }
 
-    function process(item, qty){
-    	var data = {
-			item: item,
-			qty: qty
-		}
-	// console.log(data);
-		$.ajax({
-			type: "GET", // "POST"
-			url: "{% url 'cart' %}",
-			data: data,
-			success: function(data) {
-				console.log(data);
-				if (data.deleted){
-					$("#item-"+item).fadeOut();
-					$("#st").text(data.subtotal);
-					$("#tt").text(data.tax_total);
-					$("#ct").text(data.cart_total);
-				} else {
-					$("#it-"+item).text(data.line_total);
-					$("#st").text(data.subtotal);
-					$("#tt").text(data.tax_total);
-					$("#ct").text(data.cart_total);
-				}
+function process(item, qty){
+    if(qty == 0){
+      removeCartPageItem(item);
+    }else{
+    	var data = {item: item,qty: qty};
+    	$.ajax({
+    		type: "GET", // "POST"
+    		url: "{% url 'cart' %}",
+    		data: data,
+    		success: function(data) {
+    			if (data.deleted){
+    				$("#item-"+item).fadeOut();
+    				$("#st").text(data.subtotal);
+    				$("#tt").text(data.tax_total);
+    				$("#ct").text(data.cart_total);
+    			} else {
+    				$("#it-"+item).text(data.line_total);
+    				$("#st").text(data.subtotal);
+    				$("#tt").text(data.tax_total);
+    				$("#ct").text(data.cart_total);
+    			}
 
-				if (data.total_items == 0 ) {
-					$(".shopping-cart").fadeOut();
-					$(".main-content").html('&nbsp;').load("{% url 'emptycart' %}");
+    			if (data.total_items == 0 ) {
+    				$(".shopping-cart").fadeOut();
+    				$(".main-content").html('&nbsp;').load("{% url 'emptycart' %}");
 
-				}
+    			}
 
-				var message = ""
-				if (data.item_added) {
-					message = "New item added"
-				} else if (data.deleted){
-					message = "Item removed"
-				} else {
-					message = "Item updated"
-				}
-				toastr.success(message, 'success');
-				updateCartItemCount()
-				}, 
-			error: function(response, error) {
-				// console.log(response)
-				// console.log(error)
-				$("#add-form").submit()
-			}
-		});
+    			toastr.success('Item updated', 'success');
+    			updateCartItemCount();
+          updateMinicart();
+    			}, 
+    		error: function(error){
+    			console.log(error)
+    		}
+    	});
     }
+}
 /* end of click buttons */
 </script>
 {% endblock %}

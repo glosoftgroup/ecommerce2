@@ -845,121 +845,31 @@
 <script type="text/javascript" src="{% static 'assets/lib/jquery-ui/jquery-ui.min.js' %}"></script>
 
 <script type="text/javascript" src="{% static 'assets/lib/fancyBox/jquery.fancybox.js' %}"></script>
-<script type="text/javascript">
-    $('.selectpicker').selectpicker({
-      style: 'btn-default',
-      size: 4
-    })
-    function setPrice(){
-        var price = $(".variation_select option:selected").attr("data-price")
-
-        var sale_price = $(".variation_select option:selected").attr("data-sale-price")
-        if (sale_price != "" && sale_price != "None" && sale_price != null ) {
-            $(".p").html("KShs " + sale_price);
-            $(".old-p").html(price)
-        } else {
-            $(".p").html("KShs " +price);
-            $(".old-p").html('')
-        }
-    }
-    setPrice()
-    $(".variation_select").change(function(){
-        setPrice()
-    })
-
-</script>
 {% endblock %}
  <!--end extra js block-->
  {% block jquery %}
-<script type="text/javascript">
-$(document).ready(function(){
-     console.log({{ request.session.cart_id }});
-     updateCartItemCount();
-     updateMinicart();
+  <script type="text/javascript">
+/* select button */
+$('.selectpicker').selectpicker({
+  style: 'btn-default',
+  size: 4
+})
+function setPrice(){
+    var price = $(".variation_select option:selected").attr("data-price")
 
-     $(".btn-add-cart").click(function(event){
-    // event.preventDefault();
-        var formData = $("#add-form").serialize();
-        console.log(formData);
-        $.ajax({
-            type: "GET", // "POST"
-            url: "{% url 'cart' %}",
-            data: formData,
-            success: function(data) {
-                console.log(data);
-                updateCartItemCount();
-                updateMinicart();
-                toastr.success(data.flash_message, 'Success', 
-                { showDuration: 2000,hideDuration: 1000, timeOut: 2000});
-            }, 
-            error: function(response, error) {
-                console.log(error)
-            }
-        });
-
-    });
-
-
-});
-function updateCartItemCount(){
-    var badge = $("#notify");
-    var my_count = $("#my-count");
-
-    $.ajax({
-        type: "GET",
-        url: "{% url 'item_count' %}",
-        success: function(data){
-            badge.text(data.count);
-            // console.log(data.count);
-            my_count.text(data.count);
-            /**- if cart qty is 0-**/
-            if(data.count == 0){
-              $('.cart-block-content').fadeOut(function(){
-                $('.cart-block-content').html('Cart is empty').fadeIn();
-              });                 
-            }
-        },
-        error: function(data, error) {
-            console.log(data);
-            console.log(error);
-        }
-
-    });
-
- }
-    function updateMinicart(){      
-            $(".cart-block").html('&nbsp;').load("{% url 'minicart' %}");
+    var sale_price = $(".variation_select option:selected").attr("data-sale-price")
+    if (sale_price != "" && sale_price != "None" && sale_price != null ) {
+        $(".p").html("KShs " + sale_price);
+        $(".old-p").html(price)
+    } else {
+        $(".p").html("KShs " +price);
+        $(".old-p").html('')
     }
-    function removeCartItem(id){
-        // alert(id);
-        $.ajax({
-            type: "GET",
-            url: "{% url 'cart' %}",
-            data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                    item: id,
-                    qty:1,
-                    delete:'True'
-            },
-            success: function(data){
-                var item_id = $(".remove-item-"+id);
-                item_id.fadeOut(function(){
-                    updateCartItemCount();
-                    $('.total-price').html(data.subtotal);
-                    // $('.cart-title').html(data.count + ' Items in my cart');
-                    // updateMinicart();
-                });
-
-                // alert('deleted')
-                console.log('deleted');
-            },
-            error: function(data, error) {
-                console.log(data);
-                console.log(error);
-            }
-
-        });
-    }
-  
+}
+setPrice()
+$(".variation_select").change(function(){
+    setPrice()
+})
+/* end select button */
 </script>
 {% endblock %}
