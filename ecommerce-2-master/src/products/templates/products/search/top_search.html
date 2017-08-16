@@ -1,0 +1,41 @@
+{% if products %}
+<div class="panel panel-default animated fadeIn">
+    <div class="panel-body">
+        <h4 class="text-center">Search Results</h4>
+        <hr style="padding:0px; margin:2px auto 5px;" width=" 50%" align="center">
+        <div class="col-md-12">
+            <ul>
+                {% for product in products %}
+                    <li class="res_product_result" data-product="{{ product.get_absolute_url }}">
+                        <div class="search-left">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:50px;width:auto;" />
+                            </a>
+                        </div>
+                        <div class="search-right">
+                            <p> {{product.title}}</p>
+                            <p style="color: #f96d10;font-weight: 600;">
+                                KShs
+                             {% if product.variation_set.first.sale_price %}
+                              {{product.variation_set.first.sale_price}}
+                             {% else %}
+
+                             {{product.variation_set.first.price}}
+                             {% endif %}
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if products|length > 5 %}
+            <a href="#" class="btn btn-block btn-gray btn-round">Load More</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-search-info text-center animated fadeInUp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    No Matching Results for {{search_query}}
+</div>
+{% endif %}

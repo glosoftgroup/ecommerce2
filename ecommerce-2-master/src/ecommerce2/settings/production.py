@@ -75,6 +75,7 @@ if not settings.DEBUG:
 	    'registration',
 	    #my apps
 	    'newsletter',
+		'products',
 	)
 
 	MIDDLEWARE_CLASSES = (

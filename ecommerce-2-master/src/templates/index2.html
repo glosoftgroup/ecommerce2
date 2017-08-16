@@ -2,8 +2,61 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block head_title %}Home Shop{% endblock %}
+    {% block head_title %}Home Shop{% endblock %}
+{% block style %}
 
+/* CSS FOR DEMO ONLY */
+.animateds  {
+  -webkit-animation-duration : 3s  ;
+  animation-duration : 3s  ;
+
+  -webkit-animation-delay : 500ms  ;
+  animation-delay : 500ms  ;
+}
+
+.animate-out {
+  -webkit-animation-delay : 0ms  ;
+  animation-delay : 0ms  ;
+}
+
+.slide-carousel h4 {
+  font-size: 28px;
+}
+
+.slide-carousel p {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto 20px;
+}
+
+.slide-carousel .owl-item {
+  display: table;
+}
+
+.slide-carousel .item {
+  height: 80vh;
+ /* background-color: #fc0;*/
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.slide-carousel .btn {
+    display: inline-block;
+    line-height: 35px;
+    height: 35px;
+    text-align: center;
+    padding: 0 20px !important;
+    width: auto;
+    background-color: #000;
+    text-decoration: none;
+    color: #fff;
+    vertical-align: middle;
+    border-radius: 50px 50px;
+
+}
+
+{% endblock %}
 {% block body_tag %}<body class="option6">{% endblock %}
 {% block navbar_li %}
     <li class="active"><a href="{% url 'home' %}">Home</a></li>
@@ -94,42 +147,76 @@
 {% endblock %}
 <!-- content -->
 {% block content %}
-<!-- Home slideder-->
+<!-- Home slider-->
 <div id="home-slider">
     <div class="container">
         <div class="row">
             <div class="col-sm-8" style="padding-right: 0px;">
-                <div class="homeslider">
-                    <ul id="contenhomeslider-customPage">
-                      <li><img alt="Funky roots" src="{% static 'assets/data/option6/slide1.jpg' %}" title="Funky roots" /></li>
-                      <li><img alt="Funky roots" src="{% static 'assets/data/option6/slide1.jpg' %}" title="Funky roots" /></li>
-                      <li><img  alt="Funky roots" src="{% static 'assets/data/option6/slide1.jpg' %}" title="Funky roots" /></li>
-                    </ul>
-                    <div class="bx-control">
-                        <div class="slide-prev">
-                            <span id="bx-prev"></span>
-                        </div>
-                        <div id="bx-pager" class="slide-pager">
-                              <a data-slide-index="0" href="">1</a>
-                              <a data-slide-index="1" href="">2</a>
-                              <a data-slide-index="2" href="">3</a>
-                        </div>
-                        <div class="slide-next">
-                            <span id="bx-next"></span>
-                        </div>
-                    </div>
-                </div>
+                <!-- html -->
+                <div class="slide-carousel">
+                      <div class="item" style="background:url('{% static 'assets/data/option4/slider1.jpg' %}') no-repeat;">
+                        <h4 data-animation-in="fadeInUp" data-animation-out="animate-out fadeOutDown">Slide 1</h4>
+                        <p data-animation-in="rollIn" data-animation-out="animate-out rollOut">Cras a elementum dolor. Praesent aliquam sapien ac eros semper ullamcorper. Sed imperdiet enim at sodales suscipit. Aenean eget faucibus ipsum.</p>
+                        <p><a href="#" class="btn" data-animation-in="fadeInLeft" data-animation-out="animate-out fadeOutRight">Button 1</a></p>
+                      </div>
+                      <div class="item" style="background:url('{% static 'assets/data/option4/slider2.jpg' %}') no-repeat;">
+                        <h4 data-animation-in="flipInY" data-animation-out="animate-out fadeOutUp">Slide 2</h4>
+                        <p data-animation-in="flipInX" data-animation-out="animate-out fadeOutLeft">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id dolor pulvinar, mollis orci vitae, molestie elit. Maecenas scelerisque ipsum nibh, id imperdiet nulla lobortis nec.</p>
+                        <p><a href="#" class="btn" data-animation-in="bounceInLeft" data-animation-out="animate-out bounceOutRight">Button 2</a></p>
+                      </div>
+                      <div class="item" style="background:url('{% static 'assets/data/option4/slider3.jpg' %}') no-repeat;">
+                        <h4 data-animation-in="slideInDown" data-animation-out="animate-out slideOutUp">Slide 3</h4>
+                        <p data-animation-in="slideInRight" data-animation-out="animate-out fadeOut">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id dolor pulvinar, mollis orci vitae, molestie elit. Maecenas scelerisque ipsum nibh, id imperdiet nulla lobortis nec.</p>
+                        <p><a href="#" class="btn" data-animation-in="slideInUp" data-animation-out="animate-out slideOutDown">Button 3</a></p>
+                      </div>
+                  </div>
             </div>
+            <!--<div class="col-sm-8" style="padding-right: 0px;">-->
+                <!--<div class="homeslider">-->
+                    <!--<ul id="contenhomeslider-customPage">-->
+                      <!--<li><img alt="Funky roots" src="{% static 'assets/data/option6/slide1.jpg' %}" title="Funky roots" /></li>-->
+                      <!--<li><img alt="Funky roots" src="{% static 'assets/data/option6/slide1.jpg' %}" title="Funky roots" /></li>-->
+                      <!--<li><img  alt="Funky roots" src="{% static 'assets/data/option6/slide1.jpg' %}" title="Funky roots" /></li>-->
+                    <!--</ul>-->
+                    <!--<div class="bx-control">-->
+                        <!--<div class="slide-prev">-->
+                            <!--<span id="bx-prev"></span>-->
+                        <!--</div>-->
+                        <!--<div id="bx-pager" class="slide-pager">-->
+                              <!--<a data-slide-index="0" href="">1</a>-->
+                              <!--<a data-slide-index="1" href="">2</a>-->
+                              <!--<a data-slide-index="2" href="">3</a>-->
+                        <!--</div>-->
+                        <!--<div class="slide-next">-->
+                            <!--<span id="bx-next"></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="col-sm-2 group-banner-slider" style="padding-left: 2px;">
-                <div class="item banner-opacity">
-                    <a href="#"><img src="{% static 'assets/data/option6/banner9.jpg' %}" alt="Banner"></a>
-                </div>
+                <!--<div class="item banner-opacity owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplay="true" data-autoplayTimeout="100" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>-->
+                    <!--<a style="width:183px;height:158px;" href="#"><img src="{% static 'assets/data/option6/banner9.jpg' %}" alt="Banner"></a>-->
+                    <!--<a href="#"><img src="{% static 'assets/data/option6/banner10.jpg' %}" alt="Banner"></a>-->
+                    <!--<a href="#"><img src="{% static 'assets/data/option6/banner11.jpg' %}" alt="Banner"></a>-->
+                    <!--<a href="#"><img src="{% static 'assets/data/option6/banner9.jpg' %}" alt="Banner"></a>-->
+                    <!--<a href="#"><img src="{% static 'assets/data/option6/banner10.jpg' %}" alt="Banner"></a>-->
+                <!--</div>-->
+                <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
+                        <li><a href="#"><img src="/static/assets/data/slide-left.jpg" alt="slide-left"></a></li>
+                        <li><a href="#"><img src="/static/assets/data/slide-left2.jpg" alt="slide-left"></a></li>
+                        <li><a href="#"><img src="/static/assets/data/slide-left3.png" alt="slide-left"></a></li>
+                    </ul>
                 <div class="item banner-opacity">
                     <a href="#"><img src="{% static 'assets/data/option6/banner10.jpg' %}" alt="Banner"></a>
                 </div>
-                <div class="banner-opacity">
-                    <a href="#"><img src="{% static 'assets/data/option6/banner11.jpg' %}" alt="Banner"></a>
-                </div>
+                <!--<div class="banner-opacity">-->
+                    <!--<a href="#"><img src="{% static 'assets/data/option6/banner11.jpg' %}" alt="Banner"></a>-->
+                <!--</div>-->
+                <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
+                        <a href="#"><img src="{% static 'assets/data/option6/banner9.jpg' %}" alt="Banner"></a>
+                        <a href="#"><img src="{% static 'assets/data/option6/banner10.jpg' %}" alt="Banner"></a>
+                        <a href="#"><img src="{% static 'assets/data/option6/banner11.jpg' %}" alt="Banner"></a>
+                    </ul>
             </div>
             <div class="col-sm-2 group-banner-slider" style="padding-left: 2px; margin-left:-15px; padding-right: 0;">
                 <div class=" item policy">
@@ -168,11 +255,11 @@
             <div class="col-sm-12 header-top-right">
                 <div class="group-banner-slide">
                     <div class="col-left">
-                        
+
                     </div>
                     <div class="col-right">
-                        
-                        
+
+
                     </div>
                 </div>
             </div>
@@ -273,16 +360,29 @@
                   <div class="navbar-brand"><a href="#"><img alt="fashion" src="{% static 'assets/data/icon-fashion.png' %}" />Electronic</a></div>
                   <span class="toggle-menu"></span>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse">           
-                  <ul class="nav navbar-nav">
-                    <li class="active"><a data-toggle="tab" href="#tab-4">Salers</a></li>
-                    <!-- <li><a data-toggle="tab" href="#tab-5">Specials</a></li>
-                    <li><a data-toggle="tab" href="#tab-4">New Arrivals</a></li>
-                    <li><a data-toggle="tab" href="#tab-5">Most Reviews</a></li>
-                    <li><a data-toggle="tab" href="#tab-4">On Sales</a></li>
-                    <li><a data-toggle="tab" href="#tab-5">Trending</a></li> -->
-                     <li><a href="javascript:;">No categories</a></li>
-                  </ul>
+                <div class="collapse navbar-collapse">
+                       <ul class=" cat-nav owl-carousel"  data-autowidth="true" data-dots="false" data-loop="true" data-nav = "true" data-margin = "1.2" data-responsive='{"0":{"items":3},"600":{"items":5},"1000":{"items":8}}'>
+                           <a class="actives" href="#tab-5" data-toggle="tab">New Items</a>
+                            <a href="#tab-4" data-toggle="tab">When to quit</a>
+                           <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                            <a href="#tab-5" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                            <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                            <a href="#tab-5" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                            <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                            <a href="#tab-5" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                            <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                       </ul>
+                  <!--<ul class="nav navbar-nav owl-carousels" data-autowidth="true" data-dots="false" data-loop="true" data-nav = "true" data-margin = "1" data-responsive='{"0":{"items":3},"600":{"items":5},"1000":{"items":8}}'>-->
+                    <!--<li class="active item"><a data-toggle="tab" href="#tab-4">Salers</a></li>-->
+                    <!--<li><a data-toggle="tab" href="#tab-5">Specials</a></li>-->
+                    <!--<li><a data-toggle="tab" href="#tab-4">New Arrivals</a></li>-->
+                    <!--<li><a data-toggle="tab" href="#tab-5">Most Reviews</a></li>-->
+                    <!--<li><a data-toggle="tab" href="#tab-4">On Sales</a></li>-->
+                    <!--<li ><a data-toggle="tab" href="#tab-5">Trending</a></li>-->
+                       <!--<li ><a data-toggle="tab" href="#tab-5">Trending 2</a></li>-->
+                     <!--<li><a href="javascript:;">No categories</a></li>-->
+                  <!--</ul>-->
+
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
               <div id="elevator-1" class="floor-elevator">
@@ -290,8 +390,10 @@
                     <a href="#elevator-2" class="btn-elevator down fa fa-angle-down"></a>
               </div>
             </nav>
-           <div class="product-featured clearfix">
+            <!-- demo workout -->
+            <div class="product-featured clearfix p-featured">
                 <div class="row">
+
                     <div class="col-sm-2 sub-category-wapper">
                         <ul class="sub-category-list">
                             <li><a href="#">Phones</a></li>
@@ -303,16 +405,64 @@
                             <div class="tab-container">
                                 <div class="tab-panel active" id="tab-4">
                                    <div class="box-left">
-                                       <div class="banner-img">
+                                       <!--<ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">-->
+                                            <!--<a href="#"><img src="{% static 'assets/data/option6/banner9.jpg' %}" alt="Banner"></a>-->
+                                            <!--<a href="#"><img src="{% static 'assets/data/option6/banner10.jpg' %}" alt="Banner"></a>-->
+                                            <!--<a href="#"><img src="{% static 'assets/data/option6/banner11.jpg' %}" alt="Banner"></a>-->
+                                        <!--</ul>-->
+                                       <div class="banner-img owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
                                             <a href="#"><img src="{% static 'assets/data/option6/banner3.jpg' %}" alt="Banner Product"></a>
+                                           <a href="#"><img src="{% static 'assets/data/option6/banner4.jpg' %}" alt="Banner Product"></a>
+                                           <a href="#"><img src="{% static 'assets/data/option6/banner5.jpg' %}" alt="Banner Product"></a>
                                         </div>
                                    </div>
                                    <div class="box-right">
-                                       <ul class="product-list row">
-                                       
+                                       <ul class="product-list row owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplay="true" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
                                        {% for product in products %}
-                                            {% if product.get_image_url %}
-                                                <li class="col-sm-4">
+                                            <!--{#{% if product.get_image_url %}#}-->
+                                                <li class="item col-sm-4s">
+                                                    <!-- <div class="right-block">
+                                                        <h5 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
+                                                        <div class="content_price">
+                                                            <span class="price product-price">{{product.list_price}}</span>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="left-block">
+                                                        <!-- <a href="{{ product.get_absolute_url }}"><img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:230px;" /></a> -->
+                                                        <a href="{{ product.get_absolute_url }}"><img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:180px;" /></a>
+
+                                                        <div class="add-to-cart" onclick="addTocart('{{ product.id }}', '{{ product.title }}', '{{product.get_image_url}}','{{product.variation_set.first.id}}')">
+                                                            <a title="Add to Cart" href="javascript:;">Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                       <hr width=" 50%" style="padding:0px; margin:2px auto 5px;" align="center" />
+                                                        <div class="price-content" style="padding:10px;height:50px;background-color: #fff;color: #adadad;position: relative;width: 100%;text-align: center;">
+                                                             <h5 class="product-name"><a class="p-name" href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
+                                                             <span class="price product-price" style="font-size:14px;">KShs
+                                                                 {% if product.variation_set.first.sale_price %}
+                                                                    {{product.variation_set.first.sale_price}}
+                                                                 {% else %}
+                                                                    {{product.variation_set.first.price}}
+                                                                 {% endif %}
+                                                             </span>
+                                                        </div>
+                                                        <div style="padding:10px;height:40px;background-color: #fff;color: #adadad;position: relative;width: 60%;text-align: center;margin:0 auto 5px;">
+                                                          <a title="Add to my wishlist" class="icon-heart icon-class" href="#">
+                                                          <i class="fa fa-heart"></i>
+                                                          </a>
+
+                                                            <a title="Add to compare" class="icon-compare icon-class" href="#">
+                                                            <i class="fa fa-compress"></i>
+                                                            </a>
+                                                        </div>
+                                                </li>
+                                            {#{% endif %}#}
+                                        {% endfor %}
+                                       </ul>
+                                       <ul class="product-list row owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplay="true" data-autoplayTimeout="2000" data-smartSpeed="3500" data-rtl="true" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
+                                       {% for product in products %}
+                                            <!--{#{% if product.get_image_url %}#}-->
+                                                <li class="item col-sm-4s">
                                                     <!-- <div class="right-block">
                                                         <h5 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
                                                         <div class="content_price">
@@ -334,20 +484,28 @@
                                                        <hr width=" 50%" style="padding:0px; margin:2px auto 5px;" align="center" />
                                                         <div class="price-content" style="padding:10px;height:50px;background-color: #fff;color: #adadad;position: relative;width: 100%;text-align: center;">
                                                              <h5 class="product-name"><a class="p-name" href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
-                                                             <span class="price product-price" style="font-size:14px;">KShs 
+                                                             <span class="price product-price" style="font-size:14px;">KShs
                                                              {% if product.variation_set.first.sale_price %}
                                                               {{product.variation_set.first.sale_price}}
                                                              {% else %}
-                        
+
                                                              {{product.variation_set.first.price}}
                                                              {% endif %}</span>
                                                         </div>
+                                                    <hr width=" 50%" style="padding:0px; margin:2px auto;display:none;" align="center" />
+                                                    <!-- demo -->
+                                                    <div class="" style="display:none;">
+                                                        <span class="wishlist" style="margin-right:10px;"><i class="fa fa-heart"></i></span>
+                                                        <span class="wishlist" style="margin-right:10px;"><i class="fa fa-heart"></i></span>
+                                                        <span class="wishlist"><i class="fa fa-heart"></i></span>
+                                                    </div>
                                                 </li>
-                                            {% endif %}
-                                        {% endfor %}     
+                                            {#{% endif %}#}
+                                        {% endfor %}
                                        </ul>
                                    </div>
                                 </div>
+                            <!-- tab product -->
                                 <div class="tab-panel" id="tab-5">
                                     <div class="box-left">
                                        <div class="banner-img">
@@ -579,6 +737,36 @@
                     </li>
                 </ul>
             </div>
+<!--<div class="col-md-6 col-md-offset-3">-->
+            <!--<div id="demo-ds">-->
+                <!--<ul class="nav navbar-nav dem owl-carousels">-->
+                    <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="post-thumb image-hover2">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a href="#"><img src="{% static 'assets/data/option6/blog1.jpg' %}" alt="Blog"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<a class="y">heelo</a>-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li >&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="post-thumb image-hover2">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a href="#"><img src="{% static 'assets/data/option6/blog2.jpg' %}" alt="Blog"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<a class="y">sadd</a>-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li >&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="post-thumb image-hover2">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a href="#"><img src="{% static 'assets/data/option6/blog3.jpg' %}" alt="Blog"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<a class="y">sadf</a>-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li >&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="post-thumb image-hover2">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a href="#"><img src="{% static 'assets/data/option6/blog4.jpg' %}" alt="Blog"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<a class="y">opoo</a>-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                <!--</ul>-->
+            <!--</div>-->
+<!--</div>-->
         </div>
         <!-- ./blog list -->
         <!-- service 2 -->
@@ -722,19 +910,104 @@
 
        </div> 
        <div class="modal-footer"> 
-        <button type="button" class="btn btn-primary prev-btn pull-left" data-dismiss="modal">Continue Shopping</button> 
-        <a href="{% url 'cart' %}" class="btn btn-primary next-btn"> Checkout </a> 
+        <button type="button" class="btn btn-gray prev-btn pull-left btn-round" data-dismiss="modal">Continue Shopping</button>
+        <a href="{% url 'cart' %}" class="btn btn-color next-btn btn-round"> Checkout </a>
        </div> 
       </div><!-- /.modal-content --> 
     </div>
     
     </div>
 <!-- end item cart model -->
+
 {% endblock %}
 <!-- end content-->
 
-{% block jquery %}
+{% block js %}
+<script>
+    $(document).ready(function(){
 
+      $('.modal').on('show.bs.modal', function (e) {
+            $('.modal .modal-dialog').attr('class', 'modal-dialog  zoomIn  animated');
+      })
+      $('.modal').on('hide.bs.modal', function (e) {
+        $('.modal .modal-dialog').attr('class', 'modal-dialog  zoomOut  animated');
+      })
+
+        $('.bxslider').bxSlider({
+          nextSelector: '#slider-next',
+          prevSelector: '#slider-prev',
+          nextText: 'Onward →',
+          prevText: '← Go back'
+        });
+
+        $(".cat-nav a").on('click',function() {
+            //alert($(this).attr('href'));
+            $(".cat-nav a.actives").removeClass("actives");
+             $(this).addClass("actives");
+             //$(this).parent().addClass("actives");
+
+
+            //Commented since it is not available
+            //$($(this).attr('href')).show(); //Fade in the active content
+            //return false;
+         });
+
+
+          // Declare Carousel jquery object
+          var owl = $('.slide-carousel');
+
+          // Carousel initialization
+          owl.owlCarousel({
+              loop:true,
+              margin:0,
+              navSpeed:1000,
+              nav:true,
+              items:1,
+              autoplay: true,
+              autoplayTimeout: 5000,
+              autoplayHoverPause: true,
+             //autoplaySpeed: false,
+              dots:true,
+              navText: [ "<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>" ],
+          });
+
+          // add animate.css class(es) to the elements to be animated
+          function setAnimation ( _elem, _InOut ) {
+            // Store all animationend event name in a string.
+            // cf animate.css documentation
+            var animationEndEvent = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+
+            _elem.each ( function () {
+              var $elem = $(this);
+              var $animationType = 'animated ' + $elem.data( 'animation-' + _InOut );
+
+              $elem.addClass($animationType).one(animationEndEvent, function () {
+                $elem.removeClass($animationType); // remove animate.css Class at the end of the animations
+              });
+            });
+          }
+
+        // Fired before current slide change
+          owl.on('change.owl.carousel', function(event) {
+              var $currentItem = $('.owl-item', owl).eq(event.item.index);
+              var $elemsToanim = $currentItem.find("[data-animation-out]");
+              setAnimation ($elemsToanim, 'out');
+          });
+
+        // Fired after current slide has been changed
+          owl.on('changed.owl.carousel', function(event) {
+
+              var $currentItem = $('.owl-item', owl).eq(event.item.index);
+              var $elemsToanim = $currentItem.find("[data-animation-in]");
+              setAnimation ($elemsToanim, 'in');
+          });
+
+
+
+
+});
+
+</script>
 {% endblock %}
 </body>
 </html>

@@ -29,7 +29,25 @@
 
       <style>
       {% block style %}{% endblock %}
-      </style>
+
+      #search-overlay-menu-btn::before {
+        font: normal normal normal 18px/1 FontAwesome;
+        content: "\f002";
+        color: #fff;
+        display: block;
+        padding-top: 6px;
+      }
+      #search-overlay-menu-btn {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        /*right: 250px;*/
+        right:100px;
+        display:none;
+      }
+
+          </style>
 
 
 
@@ -41,27 +59,6 @@
 <!-- top header-->
   <div class="top-header">
       <div class="container">
-          <div class="currency ">
-              <div class="dropdown">
-                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">USD</a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Dollar</a></li>
-                      <li><a href="#">Euro</a></li>
-                    </ul>
-              </div>
-          </div>
-          <div class="language ">
-              <div class="dropdown">
-                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                    <img alt="email" src="{% static 'assets/images/fr.jpg' %}" />French
-                    
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#"><img alt="email" src="{% static 'assets/images/en.jpg' %}" />English</a></li>
-                      <li><a href="#"><img alt="email" src="{% static 'assets/images/fr.jpg' %}" />French</a></li>
-                  </ul>
-              </div>
-          </div>
           <div class="top-bar-social">
               <a href="#"><i class="fa fa-facebook"></i></a>
               <a href="#"><i class="fa fa-twitter"></i></a>
@@ -69,8 +66,8 @@
               <a href="#"><i class="fa fa-google-plus"></i></a>
           </div>
           <div class="support-link">
-              <a href="#">Abount Us</a>
-              <a href="#">Support</a>
+              <a href="{% url 'about' %}">About Us</a>
+              <a href="{% url 'contact' %}">Support</a>
           </div>
 
           <div id="user-info-top" class="user-info pull-right">
@@ -90,31 +87,15 @@
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-3 logo">
-                <a href="index.html"><img alt="Kute shop" src="{% static 'assets/data/option6/logo.png' %}" /></a>
+                <a href="{% url 'home' %}"><img alt="Kute shop" src="{% static 'assets/data/option6/logo.png' %}" /></a>
             </div>
             <div class="col-xs-7 col-sm-8 col-md-7 header-search-box">
                 <form class="form-inline">
-                      <!-- <div class="form-group form-category">
-                        <select class="select-category">
-                            <option value="2">All Categories</option>
-                            <option value="1">Men</option>
-                            <option value="2">Women</option>
-                        </select>
-                      </div> -->
                       <div class="form-group input-serach">
-                        <input type="text"  placeholder="Keyword here...">
+                        <input type="text"  class="search-input" data-url = "{% url 'products-search' %}" placeholder="Search Keyword here...">
                       </div>
-                      <button type="submit" class="pull-right btn-search"></button>
+                      <button type="button" onclick="alert('ad')" class="pull-right btn-search"></button>
                 </form>
-                <!-- 
-                <div class="keyword">
-                    <p class="lebal">Keywords:</p>
-                    <p>
-                        <a href="#">T-shirt, </a>
-                        <a href="#">Leggings, </a>
-                        <a href="#">Cotton, ...</a>
-                    </p>
-                </div> -->
             </div>
             <div class="col-xs-5 col-sm-3 col-md-2 group-button-header">
                 <a title="Compare" href="#" class="btn-compare">compare</a>
@@ -455,12 +436,16 @@
                     </nav>
                 </div>
             </div>
+
+            <button type="button" id="search-overlay-menu-btn"></button>
             <!-- userinfo on top-->
             <div id="form-search-opntop">
+
             </div>
             <!-- userinfo on top-->
             <div id="user-info-opntop">
             </div>
+
             <!-- CART ICON ON MMENU -->
             <div id="shopping-cart-box-ontop">
                 <i class="fa fa-shopping-cart"></i>
@@ -472,7 +457,65 @@
 
 </div>
 <!--  header -->
+<section class="search-overlay-menu">
+        <!-- Close Icon -->
+        <a href="javascript:void(0)" class="search-overlay-close"></a>
+        <!-- End Close Icon -->
+        <div class="container">
+            <!-- Search Form -->
+            <form role="search" id="searchform" action="http://theme.nileforest.com/search" method="get">
+                <div class="search-icon-lg">
+                    <img src="{% static 'img/search-icon-lg.png' %}" alt="">
+                </div>
+                <label class="h6 normal search-input-label" for="search-query">Enter keywords to Search Product</label>
+                <input value="" name="q" id="res-search-input" data-url="{% url 'products-search' %}" placeholder="Search..." type="search">
+                <button type="button" id="res-search-button">
+                    <img src="{% static 'img/search-lg-go-icon.png' %}" alt="">
+                </button>
+            </form>
+            <!-- End Search Form -->
+            <div class="col-md-6 col-md-offset-3 overlay-search-div animated slideInUp">
 
+            <div class="panel panel-default animated fadeIn">
+                <div class="panel-body">
+                    <h4 class="text-center">Search Results</h4>
+                    <hr style="padding:0px; margin:2px auto 5px;" width=" 50%" align="center">
+                    <div class="col-md-12">
+                        <ul>
+                            {% for product in products %}
+                                <li class="res_product_result" data-product="{{ product.get_absolute_url }}">
+                                    <div class="search-left">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img class="img-responsive" alt="product" src="{{ product.get_image_url }}" style="height:50px;width:auto;" />
+                                        </a>
+                                    </div>
+                                    <div class="search-right">
+                                        <p> {{product.title}}</p>
+                                        <p style="color: #f96d10;font-weight: 600;">
+                                            KShs
+                                         {% if product.variation_set.first.sale_price %}
+                                          {{product.variation_set.first.sale_price}}
+                                         {% else %}
+
+                                         {{product.variation_set.first.price}}
+                                         {% endif %}
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% if products|length > 5 %}
+                        <a href="#" class="btn btn-block btn-gray btn-round">Load More</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+  <div class="col-md-5 col-md-offset-3 col-sm-12 animated search-div">
+
+  </div>
 <!-- content -->
 {% block content %}{% endblock %}
 <!-- end content-->

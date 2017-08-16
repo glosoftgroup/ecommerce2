@@ -6,27 +6,35 @@
                 {% for i in object.cartitem_set.all %}
                    <li class="product-info remove-item-{{i.item.id}}">
                         <div class="p-left">
-                            <a href="javascript:;" class="remove_link" style="margin-right:5px;" onclick="removeCartItem('{{i.item.id}}')"></a>
                             <a href="{{i.item.product.get_absolute_url}}">
                             <img class="img-responsive" src="{{i.item.product.get_image_url}}" alt="p10">
                             </a>
                         </div>
                         <div class="p-right">
                             <p class="p-name">{{i.item.get_title}}</p>
-                            <p class="p-rice">KShs. {{ i.line_item_total }}</p>
-                            <p>Qty: {{ i.quantity }}</p>
+                            <p class="p-rice">{{ i.quantity }}
+                                <span>x</span>
+                                KShs. {{ i.line_item_total }}</p>
+                            <!--<p>Qty: {{ i.quantity }}</p>-->
+                            <!--<a class="product-remove" href="javascript:void(0)" onclick="removeCartItem('{{i.item.id}}')">-->
+                               <!--<i class="fa fa-times-circle" aria-hidden="true"></i>-->
+                            <!--</a>-->
                         </div>
+                         <a class="product-remove" href="javascript:void(0)" onclick="removeCartItem('{{i.item.id}}')">
+                               <i class="fa fa-times-circle" aria-hidden="true"></i>
+                            </a>
                     </li>
                 {% endfor %}
             
             </ul>
         </div>
         <div class="toal-cart">
-            <span>SubTotal - </span>
-            <span class="total-price pull-right">{{ object.subtotal }}</span>
+            <span>SubTotal: </span>
+            <span class="total-price pull-right">KShs. {{ object.subtotal }}</span>
         </div>
         <div class="cart-buttons">
-            <a href="{% url 'cart' %}" class="btn-check-out">Checkout</a>
+            <a href="{% url 'cart' %}" class="btn-gray btn-round" style="width:100%;">View Cart</a>
+            <a href="{% url 'cart' %}" class="btn-color btn-round" style="width:100%;">Checkout</a>
         </div>
     {% else %} 
         Cart is empty

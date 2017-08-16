@@ -6,10 +6,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.template.response import TemplateResponse
 
 
 from django_filters import FilterSet, CharFilter, NumberFilter
 # Create your views here.
+from django.core.paginator import Paginator, PageNotAnInteger, InvalidPage, EmptyPage
 
 from .forms import VariationInventoryFormSet, ProductFilterForm
 from .mixins import StaffRequiredMixin
@@ -170,18 +172,26 @@ class ProductDetailView(DetailView):
 
 
 
-# def product_detail_view_func(request, id):
-# 	#product_instance = Product.objects.get(id=id)
-# 	product_instance = get_object_or_404(Product, id=id)
-# 	try:
-# 		product_instance = Product.objects.get(id=id)
-# 	except Product.DoesNotExist:
-# 		raise Http404
-# 	except:
-# 		raise Http404
+def product_search(request):
 
-# 	template = "product/product_detail.html"
-# 	context = {	
-# 		"object": product_instance
-# 	}
-# 	return render(request, template, context)
+	if request.is_ajax():
+		q = request.GET.get('q')
+
+		if q is not None:
+			products = Product.objects.filter(
+				Q(title__icontains=q)
+				# Q(categories__title__icontains=q) |
+				# Q(description__icontains=q)
+			).order_by('id')
+			paginator = Paginator(products, 6)
+			try:
+				products = paginator.page(1)
+			except PageNotAnInteger:
+				products = paginator.page(1)
+			except InvalidPage:
+				products = paginator.page(1)
+			except EmptyPage:
+				products = paginator.page(paginator.num_pages)
+			return TemplateResponse(request, 'products/search/top_search.html', {'products': products, 'search_query': q})
+		else:
+			return TemplateResponse(request, 'products/search/top_search.html', {'search_query': q})
