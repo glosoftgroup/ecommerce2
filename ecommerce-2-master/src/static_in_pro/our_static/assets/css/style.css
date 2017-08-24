@@ -5268,21 +5268,28 @@ button.close{
 
     .option6 .cat-nav a{
         float: left;
-        border: 1px solid #eee;
+        border: none;
         overflow: hidden;
         /*width:144px*/
-        height: 58px;
+        height: auto;
         color:#666;
-        padding:10px 20px;
+        padding:15px 20px;
+        background: url('../images/kak.png') no-repeat right center;
     }
-    .actives{background:#87cefa;color:#fff;}
+    .option6 .cat-nav .owl-item{ width:auto !important;display:inline !important;margin-right:0px !important;}
+    .option6 .cat-nav .owl-stage-outer{width: auto !important;height:50px !important}
+    .actives{background:#ff3366;color:#fff !important;}
     .option6 .cat-nav a:hover{
-        background: pink;
+        background: #ff3366;
         color:#fff;
     }
     .option6 .cat-nav a:active{
-        background: brown;
-        color:#fff;
+        background: #ff3366;
+        color:#fff !important;
+    }
+    .option6 .cat-nav a.actives{
+        background: #ff3366;
+        color:#fff !important;
     }
 
     /*@media only screen and (max-width: 480px) {

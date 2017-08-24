@@ -361,16 +361,17 @@
                   <span class="toggle-menu"></span>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse">
-                       <ul class=" cat-nav owl-carousel"  data-autowidth="true" data-dots="false" data-loop="true" data-nav = "true" data-margin = "1.2" data-responsive='{"0":{"items":3},"600":{"items":5},"1000":{"items":8}}'>
+                       <ul class=" nav navbar-nav cat-nav owl-carousel"  data-autowidth="true" data-dots="false" data-loop="true" data-nav = "true" data-margin = "1.2" data-responsive='{"0":{"items":3},"600":{"items":5},"1000":{"items":8}}'>
                            <a class="actives" href="#tab-5" data-toggle="tab">New Items</a>
                             <a href="#tab-4" data-toggle="tab">When to quit</a>
-                           <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
-                            <a href="#tab-5" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
-                            <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
-                            <a href="#tab-5" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
-                            <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
-                            <a href="#tab-5" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
-                            <a href="#tab-4" data-toggle="tab"><img src="{% static 'assets/data/option6/band-logo.png' %}" alt="Band logo"></a>
+                           <a href="#tab-5" data-toggle="tab">New Items</a>
+                            <a href="#tab-4" data-toggle="tab">When to quit</a>
+                           <a href="#tab-5" data-toggle="tab">New Items sadcasd</a>
+                            <a href="#tab-4" data-toggle="tab">When to quit</a>
+                           <a href="#tab-5" data-toggle="tab">New Items asdcfas</a>
+                            <a href="#tab-4" data-toggle="tab">When to quit</a>
+                           <a href="#tab-4" data-toggle="tab">When to quit</a>
+                           <a href="#tab-4" data-toggle="tab">When to quit</a>
                        </ul>
                   <!--<ul class="nav navbar-nav owl-carousels" data-autowidth="true" data-dots="false" data-loop="true" data-nav = "true" data-margin = "1" data-responsive='{"0":{"items":3},"600":{"items":5},"1000":{"items":8}}'>-->
                     <!--<li class="active item"><a data-toggle="tab" href="#tab-4">Salers</a></li>-->
@@ -390,6 +391,14 @@
                     <a href="#elevator-2" class="btn-elevator down fa fa-angle-down"></a>
               </div>
             </nav>
+            <div class="category-banner">
+                <div class="col-sm-6 banner">
+                    <a href="#"><img alt="ads2" class="img-responsive" src="{% static 'assets/data/ads2.jpg' %}"></a>
+                </div>
+                <div class="col-sm-6 banner">
+                    <a href="#"><img alt="ads2" class="img-responsive" src="{% static 'assets/data/ads3.jpg' %}"></a>
+                </div>
+           </div>
             <!-- demo workout -->
             <div class="product-featured clearfix p-featured">
                 <div class="row">
@@ -420,7 +429,7 @@
                                        <ul class="product-list row owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplay="true" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
                                        {% for product in products %}
                                             <!--{#{% if product.get_image_url %}#}-->
-                                                <li class="item col-sm-4s">
+                                                <li class="item col-sm-4s animated slideInDown">
                                                     <!-- <div class="right-block">
                                                         <h5 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
                                                         <div class="content_price">
@@ -941,15 +950,15 @@
         });
 
         $(".cat-nav a").on('click',function() {
-            //alert($(this).attr('href'));
+            var tab_id = $(this).attr('href');
+
             $(".cat-nav a.actives").removeClass("actives");
-             $(this).addClass("actives");
-             //$(this).parent().addClass("actives");
-
-
-            //Commented since it is not available
-            //$($(this).attr('href')).show(); //Fade in the active content
-            //return false;
+            $(this).addClass("actives");
+             <!--$(tab_id+' .box-right ul li').each(function(i){-->
+                <!--setTimeout(function(){-->
+                    <!--$(tab_id+' .box-right ul li').eq(i).addClass('is-showing');-->
+                <!--}, 150 * (i+1));-->
+             <!--});-->
          });
 
 
